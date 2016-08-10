@@ -1,0 +1,204 @@
+﻿@model RealtyWeb.Models.AppUser
+@{
+    var options = new AjaxOptions()
+    {
+
+    };
+    ViewBag.Title = "Manage";
+}
+
+<div class="row" style="margin: 10px 0 0 0;">
+    <div class="col-md-9" style="margin: 0px; padding: 0px;">
+        <h4>EDIT PROFILE</h4>
+    </div>
+    @if ((TempData["EditSuccessful"] as bool?) == false)
+    {
+        <div class="col-md-6" style="margin: 0; color: red; padding: 0px;">
+            <h4>Error encountered while saving data!</h4>
+        </div>
+    }
+    else if ((TempData["EditSuccessful"] as bool?) == true)
+    {
+        <div class="col-md-3" style="margin: 0; color: orange; padding: 0px;">
+            <h4>Successfully Updated!</h4>
+        </div>
+    }
+</div>
+
+<hr style="margin: 0 0 15px 0; border-top: 1px solid rgb(153, 153, 153);" />
+
+<div class="row" style="margin: 0px; padding: 0px;">
+    <p class="col-md-12" style="margin: 0px; padding: 3px 0 0 0;">
+        Profile Image
+    </p>
+</div>
+
+<div class="row" style="margin: 0px; padding: 0px;">
+    @using (Html.BeginForm("EditProfile", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="row" style="margin:0px; padding:0px;">
+            <div class="col-md-3" style="margin: 0px; padding: 0px;">
+                <div id="imageHandler" class="col-md-12" style="margin: 0px; padding: 0px;">
+                    <img src="@if (!string.IsNullOrEmpty(Model.ProfilePicLink) && Model.ProfilePicLink.Length > 0)
+                              { 
+                                  @Url.Action("GetImage", "Image", new { imageName = Model.ProfilePicLink })
+                              }
+                              else
+                              {
+                                  @Url.Action("GetImage", "Image", new { imageName = "~/Content/unknownProfile.png" })
+                              }" style="width: 185px; height: 185px;" />
+                </div>
+                <div class="col-md-12" style="padding: 0px; margin: 6px 0 0 0;">
+                    <input id="fileUpload" name="fileUpload" type="file" class="fileUpload" style="position: relative; width: 188px;">
+                </div>
+            </div>
+            <div class="col-md-9" style="margin: 0px; padding: 0px;">
+
+            @Html.HiddenFor(x => x.Id)
+            @Html.HiddenFor(x => x.EmailConfirmed)
+            @Html.HiddenFor(x => x.PasswordHash)
+            @Html.HiddenFor(x => x.SecurityStamp)
+            @Html.HiddenFor(x => x.PhoneNumberConfirmed)
+            @Html.HiddenFor(x => x.TwoFactorEnabled)
+            @Html.HiddenFor(x => x.LockoutEndDateUtc)
+            @Html.HiddenFor(x => x.LockoutEnabled)
+            @Html.HiddenFor(x => x.AccessFailedCount)
+            @Html.HiddenFor(x => x.AccessFailedCount)
+            @Html.HiddenFor(x => x.UserName)
+            @Html.HiddenFor(x => x.ProfilePicLink)
+        
+            @Html.AntiForgeryToken()
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true)
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.FirstName, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.FirstName, new { @style = "width: 200px; padding-left: 7px;", @class = "formTextBox" })
+                        @Html.ValidationMessageFor(model => model.FirstName)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.LastName, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.LastName, new { @style = "width: 200px; padding-left: 7px;", @class = "formTextBox" })
+                        @Html.ValidationMessageFor(model => model.LastName)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Email, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.Email, new { @style = "width: 200px; padding-left: 7px;", @class = "formTextBox", @readonly = "" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PhoneNumber, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10 ">
+                        @Html.TextBoxFor(model => model.PhoneNumber, new { @style = "width: 200px; padding-left: 7px;", @class = "formTextBox" })
+                        @Html.ValidationMessageFor(model => model.PhoneNumber)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.LicenseNo, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10 ">
+                        @Html.TextBoxFor(model => model.LicenseNo, new { @style = "width: 200px; padding-left: 7px;", @class = "formTextBox" })
+                        @Html.ValidationMessageFor(model => model.LicenseNo)
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        <div class="row" style="margin: 20px 0 0 0; padding: 0px;">
+            <div class="col-md-7" style="margin: 0px; padding: 0px;">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Address1, new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(model => model.Address1, new { @style = "width: 100%; padding-left: 7px;", @class = "formTextBox", @placeholder = "(RM./FLR./UNIT NO. & BLDG. NAME) (HOUSE/LOT & BLK. NO.) (STREET NAME) (SUBDIVISION)", @onfocus = "this.placeholder = ''", @onblur = "this.placeholder = '(RM./FLR./UNIT NO. & BLDG. NAME) (HOUSE/LOT & BLK. NO.) (STREET NAME) (SUBDIVISION)'"  })
+                            @Html.ValidationMessageFor(model => model.Address1)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Address2, new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(model => model.Address2, new { @style = "width: 100%; padding-left: 7px;", @class = "formTextBox", @placeholder = "(BARANGAY/DISTRICT/LOCALITY)", @onfocus = "this.placeholder = ''", @onblur = "this.placeholder = '(BARANGAY/DISTRICT/LOCALITY)'" })
+                            @Html.ValidationMessageFor(model => model.Address2)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Address3, new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(model => model.Address3, new { @style = "width: 100%; padding-left: 7px;", @class = "formTextBox", @placeholder = "(CITY/MUNICIPALITY)", @onfocus = "this.placeholder = ''", @onblur = "this.placeholder = '(CITY/MUNICIPALITY)'" })
+                            @Html.ValidationMessageFor(model => model.Address3)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Address4, new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(model => model.Address4, new { @style = "width: 100%; padding-left: 7px;", @class = "formTextBox", @placeholder = "(PROVINCE)", @onfocus = "this.placeholder = ''", @onblur = "this.placeholder = '(PROVINCE)'" })
+                            @Html.ValidationMessageFor(model => model.Address4)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ProfileDetails, new { @class = "control-label col-md-12",})
+                        <div class="col-md-12">
+                            @Html.TextAreaFor(model => model.ProfileDetails, new
+                       {
+                           @style = "width: 100%; height: 198px; max-width: 590px; resize: none; padding:10px;",
+                           @placeholder = "[Please provide simple description about your profile.]",
+                           @onfocus = "this.placeholder = ''",
+                           @onblur = "this.placeholder = '[Please provide simple description about your profile.]'"
+                       })
+                            @Html.ValidationMessageFor(model => model.ProfileDetails)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin: 0px 0 30px 0; padding: 0px;">
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-9">
+                    <input type="submit" value="Submit" class="btn btn-success" />
+                    <a class="btn btn-danger" href="@Url.Action("Index", "Home")">Cancel</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#fileUpload").on('change', function () {
+            var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.gif|.png|.bmp)$/;
+            if (regex.test($(this).val().toLowerCase())) {
+                if ($.browser.msie && parseFloat(jQuery.browser.version) <= 9.0) {
+                    $("#imageHandler").show();
+                    $("#imageHandler")[0].filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = $(this).val();
+                }
+                else {
+                    if (typeof (FileReader) != "undefined") {
+                        $("#imageHandler").html("");
+                        $("#imageHandler").show();
+                        $("#imageHandler").append("<img />");
+                        var reader = new FileReader();
+                        reader.onload = function (e) {
+                            $("#imageHandler img").attr({
+                                src: e.target.result, 
+                                style:"width: 185px; height: 185px;"
+                            });
+                        }
+                        reader.readAsDataURL($(this)[0].files[0]);
+                    } else {
+                        alert("This browser does not support FileReader.");
+                    }
+                }
+            } else {
+                alert("Please upload a valid image file.");
+            }
+        });
+    });
+</script>

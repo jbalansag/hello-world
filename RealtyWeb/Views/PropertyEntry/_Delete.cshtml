@@ -1,0 +1,54 @@
+﻿@model RealtyWeb.Models.PropertyEntry
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<link href="~/Content/bootstrap-theme.css" rel="stylesheet" />
+<link href="~/Content/bootstrap-theme.min.css" rel="stylesheet" />
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+
+<script type="text/javascript">
+    window.onload = function () {
+        document.getElementById('deleteForm').onsubmit = function () {
+
+            var propertyId = document.getElementById('propertyEntryId').value;
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/PropertyEntry/Delete');
+
+            var formdata = new FormData();
+            formdata.append("propertyEntryId", propertyId);
+            xhr.send(formdata);
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    parent.jQuery.fancybox.close();
+                }
+            }
+            return false;
+        }
+    }
+</script>
+
+<div style="height: 300px; border: 1px solid;">
+    <div style="width: 100%; height: 50px; border-bottom: 1px solid #e0e0e0;">
+        <h3 style="float:left; margin-left: 30px;">Delete</h3>
+        <a style="float: right; margin-right:10px; margin-top:10px;" href="javascript:parent.jQuery.fancybox.close();"><img src="@Url.Action("GetImage", "Image", new { imageName = "~/Content/fullscreenButton.png" })"></a>
+    </div>
+    <div>
+        <div style="margin-left: 40px; float: left; width: 400px; height: 100px; border: 0px solid black;">
+            <div>
+                <br />
+                <form id="deleteForm">
+                    @Html.Hidden("propertyEntryId", ViewData["propertyEntryId"])
+                    <p style="margin-bottom:60px; margin-top:20px;">Are you sure you want to delete this property?</p>
+                    <div style="margin-left:140px;">
+                        <a class="btn btn-danger" href="javascript:parent.jQuery.fancybox.close();">Close</a>
+                        <input type="submit" class="btn btn-success" value="Delete" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div style="width: 100%; margin-top: 200px; border-bottom: 1px solid #e0e0e0"></div>
+</div>

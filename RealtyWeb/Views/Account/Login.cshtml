@@ -1,0 +1,35 @@
+﻿@using RealtyWeb.Models
+
+@{
+    ViewBag.Title = "Log in";
+}
+
+<div class="row" style="padding: 70px 0 0 0">
+    <div class="row" style="margin: 0 0 30px 0; padding-left: 15px;">
+        <span><a href="@Url.Action("Index", "Home", null)" style="text-decoration:underline">Home</a></span> <i class="fa fa-chevron-right" style="font-size: 10px; color: #428bca;"></i>
+        <span>Login</span>
+    </div>
+    <div class="col-md-5 col-sm-12 col-xs-12" style="min-width: 272px; max-width: 600px; margin-bottom: 30px;">
+        @Html.Partial("_Login", new LoginViewModel())
+    </div>
+    <div class="col-md-1 col-sm-12 col-xs-12" style="padding:2px 15px 15px 15px; max-width: 600px">
+       <h4 style="background-color: white; color: black; text-align: center; margin: 3px 0 20px 0; border-radius: 5px; padding: 5px;">OR</h4> 
+    </div>
+    <div class="col-md-5 col-sm-12 col-xs-12" style="min-width: 272px; max-width: 600px">
+        @Html.Partial("_Register", new RegisterViewModel())
+    </div>
+</div>
+
+<hr style="border-top: 1px solid #999;" />
+
+<div class="row">
+    <section id="socialLoginForm" style="text-align: center">
+        @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+    </section>
+</div>
+
+<hr style="border-top: 1px solid #999; margin-bottom: 120px;" />
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

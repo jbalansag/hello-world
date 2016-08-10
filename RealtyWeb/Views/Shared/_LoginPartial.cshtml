@@ -1,0 +1,55 @@
+﻿@using RealtyWeb.Models;
+@using Microsoft.AspNet.Identity;
+
+@{
+    var context = new RealtyWebContext();
+    var userInfo = context.AppUsers.Find(User.Identity.GetUserId<int>());
+    var isAdmin = userInfo != null && userInfo.Roles.Any(x => x.Name == "Administrator");
+    var isBrokerAgent = userInfo != null && userInfo.Roles.Any(x => x.Name == "Broker" || x.Name == "Agent" || x.Name == "Agency");
+    var isClient = !isAdmin && !isBrokerAgent;
+}
+
+<ul class="nav navbar-nav navbar-right">
+    @if (Request.IsAuthenticated)
+    {
+        <li>
+            <div class="dropdown">
+                <button type="button" class="dropbtn"><i style="color: blue;" class="glyphicon glyphicon-user"></i> Manage&nbsp;&nbsp;<i class="fa fa-caret-down" style="font-size: 12px;"></i></button>
+                <div class="dropdown-content">
+                    <a href="@Url.Action("EditProfile", "Profile")"><span class="glyphicon glyphicon-user"></span>&nbsp;My Account</a>
+                    @if (isAdmin)
+                    {
+                        <a href="@Url.Action("Index", "Maintenance")"><span class="glyphicon glyphicon-cog"></span>&nbsp;Maintenance</a>
+                    }
+                    @if (isBrokerAgent || isBrokerAgent)
+                    {
+                        <a href="@Url.Action("Index", "PropertyEntry")"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;Listings</a>
+                        <a href="@Url.Action("Index", "Inquiry")"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;Client Inquiries</a>
+                    }
+                    @if (isClient)
+                    {
+                        <a href="@Url.Action("Favorites", "Home")"><span class="glyphicon glyphicon-star"></span>&nbsp;Favorites</a>
+                        <a href="@Url.Action("Favorites", "Home")"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;Inquiries</a>
+                    }
+                    @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <a href="javascript:document.getElementById('logoutForm').submit()"><span class="glyphicon glyphicon-off"></span>&nbsp;Log out</a>
+                    }
+                </div>
+            </div>
+        </li>
+    }
+    else
+    {
+        var action = Url.Action("Login", "Account", new { ReturnUrl = Request.Url } );
+                        
+        <li><a style="padding-top: 16px;" href="@action"><i class="glyphicon glyphicon-user"></i>Login | Register</a></li>
+    }
+</ul>
+
+<script type="text/javascript">
+    var isClient = "@isClient";
+    var isAdmin = "@isAdmin";
+    var isBrokerAgent = "@isBrokerAgent";
+</script>

@@ -1,0 +1,35 @@
+﻿@using Microsoft.AspNet.Identity;
+
+@model System.Collections.Generic.KeyValuePair<int, RealtyWeb.Models.PropertyEntry>
+@{ var currentUserId = User.Identity.GetUserId<int>();}
+@{ var domPropertyEntryId = "propertyId" + (Model.Value.PropertyEntryId) ; }
+@{ var selected = Model.Value.UserFavorite.Where(x => x.UserId == currentUserId).Count() > 0 ? "selected" : string.Empty; }
+@{ var ajaxOptions = new AjaxOptions 
+                     { 
+                          UpdateTargetId = domPropertyEntryId, 
+                          HttpMethod = "POST", 
+                          InsertionMode = InsertionMode.Replace, 
+                          OnSuccess = "javascript:alert(\"Property successfully added to your favorite list!!\")" 
+                     };
+}
+
+@{var style = new { 
+                     @style = "text-decoration: none; float: right; font-size: 33px; cursor: pointer;", 
+                     @title = "Click to add to your favorites" 
+                  };
+}
+@if (!string.IsNullOrEmpty(selected))
+{
+    <span class="selected" style="text-decoration: none; float: right; font-size: 33px;">☆</span>
+}
+else
+{
+    if (Request.IsAuthenticated)
+    { 
+        @Ajax.ActionLink("☆", "AddFavorite", "Home",new { userId = ViewBag.UserLoginId, propertyEntryId = Model.Value.PropertyEntryId }, ajaxOptions, style)
+    }
+    else
+    {
+        @Html.ActionLink("☆", "Login", "Account", new { returnUrl = Request.Url }, style)
+    }
+}

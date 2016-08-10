@@ -1,0 +1,309 @@
+﻿@using PagedList.Mvc;
+@using RealtyWeb.Models;
+
+@model SearchFilter
+
+@{
+    var siteInfo = ViewBag.SiteInfo as Site;
+    var mission = string.IsNullOrEmpty(siteInfo.Mission) ? string.Empty : siteInfo.Mission.Replace(Environment.NewLine, "<br/>");
+    var vision = string.IsNullOrEmpty(siteInfo.Vision) ? string.Empty : siteInfo.Vision.Replace(Environment.NewLine, "<br/>");
+    var bulletin = string.IsNullOrEmpty(siteInfo.Bulletin) ? string.Empty : siteInfo.Bulletin.Replace(Environment.NewLine, "<br/>");
+    var activities = ViewBag.Activities as List<PostCard>;
+    var recognitions = ViewBag.Recognitions as List<PostCard>;
+    var about = @"<strong style=""color:red"">Almighty Lord </strong><strong style=""color:red; font-size:21px;"">Jesus</strong><strong style=""color:red;""> Trumpet </strong><strong style=""color:green"">Realty and Brokerage</strong> (<em style=""font-weight: bold;"">ALJT Realty and Brokerage</em>) was founded by 
+                  <strong style=""color:#EA530E;"">Realtor ANTONIO RUIZ BERNALES, BSCS, MA, LLB, REB.</strong><br/><br/><br/>
+                  <strong style=""color:rgba(20, 20, 156, 0.87)"">Founder's Message:</strong><br/><br/>
+                  Buying a house is one of the biggest decisions you will make because it involves huge amount of money that can affect the financial status of the Family. Here are some guidelines that may help
+                  the buyer to get the right house for the family.<br/><br/>
+                  <strong style=""color:#EA530E;"">Foreigner as buyer.</strong> The Foreigner should know that he can own a Condominium unit even if he is not married to a Filipina as provided under the Philippine Condominium Law. If he
+                  wants to buy a property other than condominium unit he must choose a most trusted Pilipino to
+                  act as dummy. This will require an assistance of a lawyer.<br/><br/>
+                  <strong style=""color:#EA530E;"">Be prepared for an investment.</strong> Buying a House is considered as an investment. Ask yourself these questions: How much can I afford? Do I have enough savings or income to make
+                  the payments? Analyze your cash flow and see how much you can afford for a house purchase.
+                  Do I have to buy a lot only and build a house with my own design? Do I have to live in the house or for rental purpose only. Buyer must allocate a budget and go directly with the purpose of 
+                  buying the house to narrow the search.<br/><br/>
+                  <strong style=""color:#EA530E;"">Know your priorities.</strong> Should I buy a house or a condo? If your final decision is a house, 
+                  you must consider the following choices such as Row house, Townhouse, Duplex house, Single-attached house, or Single-detached house, and add in it the number of storeys. There are just
+                  some of the options available in the market. Make a list of the features you want in your new
+                  home and arrange them according to your priorities. Another things to consider are number of
+                  bedrooms, carport space for your cars, landscape garden, swimming pool, security for your
+                  safety, location of the subdivision and surroundings, the road for your ingress and egress, public
+                  transport, safe for natural calamities like tsunami, flood, landslide, typhoon, storm surge, and
+                  earthquake. List down your priorities these may help reduce stress and time in searching your home.<br/><br/>
+                  <strong style=""color:#EA530E;"">Stick to your budget.</strong> If you are fortunate to have sizeable amount set aside, you might want
+                  to consider a spot cash payment. Otherwise, there are many options for you to finance your
+                  purchase such as Pag-ibig or Bank or In-house financing schemes. Ask for a sample computation
+                  and see if this will fit your budget.<br/><br/>
+                  <strong style=""color:#EA530E;"">Ask for advice.</strong> Once you have an idea of the kind of house you are looking for, seek the
+                  advice of a license real estate broker. They can point you in the direction of available properties
+                  that fits your wants and needs as well as steer you through the paper work and buying process.
+                  Because they are licensed professionals. you can be confident that they received the proper
+                  training to make sure your transaction flows smoothly.<br/><br/>
+                  <strong style=""color:#EA530E;"">Commercial purpose.</strong> If you are looking a commercial unit you must include the possible
+                  customers or clients for your business. You should choose a City for your business. If you want
+                  an investment for the house and lot you must choose a particular area which is the subject of
+                  ongoing developments like Lapu Lapu City or North area or to be safe seek the assistance of a
+                  License Real Estate Broker for proper guidance. The Broker can give you proper projection of
+                  the area whether it has a plat rate price or past-accumulating price.<br/><br/>
+                  <strong style=""color:#EA530E;"">Safety and Security reason.</strong> You should consider buying a house with 24 hours security
+                  services and try to trace up the history of the place in terms of recorded violence related cases.
+                  Most especially if you are buying five million worth house. You must treasure your life as much as possible.<br/><br/>
+                  <strong style=""color:#EA530E;"">Know your Broker.</strong> The first thing to consider in engaging the assistance of a Broker is the
+                  background of the Broker you want to hire. Is he a trusted one and well equipped with the
+                  knowledge and training to guide you properly in the process and can help you for the
+                  documentations. Plus factor of a Broker is the knowledge of the law like if he is a graduate of Bachelor of Laws.<br/><br/>
+                  <strong style=""color:#EA530E;"">Know the mission of your Broker.</strong> If he has a mission to let young-adults know that it is
+                  advisable for them to get a house and lot while they are young to avail a long term loan in the
+                  Bank or Pag-ibig Fund to have lower monthly amortization than during their old age where
+                  monthly amortization is high because they are restricted by their age to a long term loan contract.
+                  Mostly, the regret of adults today. By this reason, they rented the house until death; That the
+                  monthly Amortization is synonymous to a rental but ultimately you will own the house plus Life
+                  insurance. If the borrower die everything goes to the legal heirs no more obligation as if fully
+                  paid the insurer will pay the balance or unpaid loan;<br/><br/>
+                  <strong style=""color:#EA530E;"">Know the objective of your Broker.</strong> If he Broker has the objective to establish good
+                  ideas and promote ethical practice of the Real Estate profession; To protect the rights of the
+                  buyer and seller; To protect the buyer from unscrupulous conduct and malpractice of the seller;
+                  To encourage the Filipino people to have their  own house rather than becoming a strangers in the night.<br/><br/>
+                  <strong style=""color:#EA530E;"">Be open to compromise.</strong> Once you have seen what is available in the market, consider your
+                  options. If location is the most important factor for you but the house you want is beyond your
+                  budget, consider getting a different unit or model in the same community. Inner units, for
+                  example, tend to be cheaper than corner or end units. If your budget is only for a smaller house,
+                  find a house that can easily be expanded to suit your growing family&#39;s needs as this will make
+                  your renovation hassle-free in the future.<br/><br/>
+                  <strong style=""color:rgb(0, 0, 255)"">ALJTHomes.com</strong> is the fastest growing property portal in the Philippines. We provide an
+                  effective online platform for leading Real Estate Developers, Agencies and Brokers that allows
+                  them to showcase their property listings to a wider audience of qualified prospective Buyers.<br/><br/>
+                  <strong style=""color:#EA530E;"">Looking to buy or rent a property?</strong>
+                  Search thousands of local real estate listings with ease, filtering your search with your preferred area, price and property type.
+                  Find and contact the real Estate Agent near you directly via phone call, email or SMS.<br/><br/>
+                  <strong style=""color:#EA530E;"">Are you a Real Estate Broker, Real Estate Agency or Real Estate Developer and want to place your listing here?</strong> Contact us here.
+                  ";
+    
+    ViewBag.Title = "About - ALJTHomes";
+}
+
+<div class="row filter-container" style="margin: 0px; padding: 0px;">
+    <div class="navbar navbar-inverse navbar-fixed-top filter-content">
+        <div class="body-content container">
+            @using (Html.BeginForm("property-for-sale-in-philippines", "property", FormMethod.Get, new { id = "searchForm", enctype = "multipart/form-data", @style = "width: 100%;margin-left: auto;margin-top: 18px;margin-right: auto;" }))
+            {
+                <div class="row" style="padding: 0px; margin: 0px;">
+                    <div class="col-md-9 col-sm-12 col-xs-12" style="margin: 0px; padding: 0px;">
+                        <div class="row" style="padding: 0px; margin:0px;">
+                            <div class="col-md-4 col-sm-4 col-xs-12 shown-small-screen filter-item">
+                                @Html.DropDownListFor(x => x.PropertyId, null, "Property Type", new { @style = "height: 25px; padding: 0 0 0 12px; width: 100%; font-size: 13px; border: none; border-radius: 0px;" })
+                            </div>
+                            <div class="col-md-2 col-sm-2 col-xs-12 hide-small-screen filter-item">
+                                @Html.DropDownListFor(x => x.MinPrices, null, "Min Price", new { @style = "height: 25px; padding: 0 0 0 12px; width: 100%; font-size: 13px; border: none; border-radius: 0px;" })
+                            </div>
+                            <div class="col-md-2 col-sm-2 col-xs-12 shown-small-screen filter-item" >
+                                @Html.DropDownListFor(x => x.MaxPrices, null, "Max Price", new { @style = "height: 25px; padding: 0 0 0 12px; width: 100%; font-size: 13px; border: none; border-radius: 0px;" })
+                            </div>
+                            <div class="col-md-2 col-sm-2 col-xs-12 hide-small-screen filter-item">
+                                @Html.DropDownListFor(x => x.Beds, null, "Bedrooms", new { @style = "height: 25px; padding: 0 0 0 12px; width: 100%; font-size: 13px; border: none; border-radius: 0px;" })
+                            </div>
+                            <div class="col-md-2 col-sm-2 col-xs-12 hide-small-screen filter-item filter-rightpad-remove">
+                                @Html.DropDownListFor(x => x.Baths, null, "Bathrooms", new { @style = "height: 25px; padding: 0 0 0 12px; width: 100%; font-size: 13px; border: none; border-radius: 0px;" })
+                            </div>
+                        </div>
+                        <div class="row" style="margin:0px;">
+                            <div class="col-md-4 col-sm-4 col-xs-12 shown-small-screen filter-item">
+                                @Html.DropDownListFor(x => x.PropIndicatorId, null, new { @style = "height: 34px; padding: 0 0 0 12px; width: 100%; margin-right: 6px; border: none; border-radius: 0px;" })
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-12 shown-small-screen filter-item">
+                                @Html.AutocompleteFor(x => x.SearchTerm, x => x.LocationId, "GetLocations", "PropertyEntry", false, new { htmlAttributes = new { @style = "width:100%; max-width:1000px; margin-right: 6px; border: none; border-radius: 0px;", @placeholder = "Search for a City, Suburb or Web Ref . . .", @onfocus = "this.placeholder = ''", @onblur = "this.placeholder = 'Search for a City, Suburb or Web Ref . . .'" } })
+                            </div>
+                            <div class="col-md-2 col-sm-2 col-xs-12 shown-small-screen filter-item filter-rightpad-remove">
+                                <button id="btnFind" type="submit" class="btn btn-success" style="width: 100%; font-weight: bold; height: 34px; border: none; border-radius: 0px; font-size: 16px;">Find</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-12 col-xs-12 hide-small-screen" style="margin: 0px; padding: 0px;">
+                        <div class="row" style="margin: 0 0 10px 0; padding: 0px;">
+                            <div class="col-md-12 col-sm-12 col-xs-12" style="padding: 0px; float: left; position: relative">
+                                <h2 style="color: #fff; margin: -3px 0 10px 0">Find Property In</h2>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12 location-filter" style="padding: 0px; margin-top: 0px; font-size: 15px;">
+                                <select id="LocationId" name="LocationId" class="js-data-example-ajax" style="width: 100%; border: none; border-radius: 0px;">
+                                    <option value="" selected="selected">Philippines</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<div class="row about-container" style="padding: 20px 15px 28px 15px;">
+    <div class="row" style="margin:0px; padding:0px;">
+        <span><a href="@Url.Action("Index", "Home", null)" style="text-decoration:underline">Home</a></span> <i class="fa fa-chevron-right" style="font-size: 10px; color: #428bca;"></i>
+        <span> About</span>
+    </div>
+
+    <div class="row" style="margin: 15px 0 0  0; padding: 0px;">
+        <div class="col-md-6 col-sm-7 col-xs-12" style="margin: 0px; padding: 0px;">
+            <img src="@if (!string.IsNullOrEmpty(siteInfo.ImagePath) && siteInfo.ImagePath.Length > 0)
+                      { 
+                         @Url.Action("GetImage", "Image", new { imageName = siteInfo.ImagePath })
+                      }
+                      else
+                      {
+                         @Url.Action("GetImage", "Image", new { imageName = "~/Content/unknownProfile.png" })
+                      }" style="width: 100%; height: 250px;" />
+        </div>
+    </div>
+
+    <div class="row" style="margin:0px; padding:0px;">
+        <h3 style="color: #90949c; background-color: #ECECEC; border-bottom: 2px solid #EA530E; padding: 5px 0;">Buyer's Guide</h3>
+        <div style="word-wrap: break-word; color: rgba(20, 20, 156, 0.87)">@Html.Raw(about)</div>
+    </div>
+
+    <div class="row" style="margin:0px; padding:0px;">
+        <h3 style="color: #90949c; background-color: #ECECEC; border-bottom: 2px solid #EA530E; padding: 5px 0;">Mission</h3>
+        <div style="word-wrap: break-word">@Html.Raw(mission)</div>
+    </div>
+
+    <div class="row" style="margin:0px; padding:0px;">
+        <h3 style="color: #90949c; background-color: #ECECEC;  border-bottom: 2px solid #EA530E; padding: 5px 0;">Vision</h3>
+        <div style="word-wrap: break-word">@Html.Raw(vision)</div>
+    </div>
+
+    <div class="row" style="margin: 0px; padding: 0px;">
+        <h3 style="color: #90949c; background-color: #ECECEC;  border-bottom: 2px solid #EA530E; padding: 5px 0;">Congratulations !</h3>
+        <div data-pause="hover" data-interval="3000" class="carousel slide" data-ride="carousel" style="width: 100%;">
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner">
+                @for (var i = 0; i < recognitions.Count(); i++)
+                {
+                    var classAttr = i == 0 ? "item active" : "item";
+                    <div class="@classAttr">
+                        <div class="carouselPanel row" style="margin: 0px; padding: 0px; width: 100%;">
+                            <div class="pull-left col-md-12" style="margin: 0px; padding: 0px;">
+                                <div class="col-md-6 col-sm-12 col-xs-12" style="margin: 0px; padding: 0 15px 0 0; max-width: 471px; min-width: 213px;">
+                                    <img style="width: 100%; height: 300px;" src="@Url.Action("GetImage", "Image", new { imageName = recognitions[i].ImagePath })">
+                                </div>
+                                <div class="col-md-6 col-sm-12 col-xs-12" style="margin: 0px; padding: 10px 0 0 0;">
+                                    @{ var description = recognitions[i].Description.Replace(Environment.NewLine, "<br/>"); }
+                                    @Html.Raw(description)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                 }
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="margin: 0px; padding: 0px;">
+        <h3 style="color: #90949c; background-color: #ECECEC;  border-bottom: 2px solid #EA530E; padding: 5px 0;">Activity Bulletin</h3>
+        <div data-pause="hover" data-interval="3000" class="carousel slide" data-ride="carousel" style="width: 100%;">
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner">
+                @for (var i = 0; i < activities.Count(); i++)
+                {
+                    var classAttr = i == 0 ? "item active" : "item";
+                    <div class="@classAttr">
+                        <div class="carouselPanel row" style="margin: 0px; padding: 0px; width: 100%;">
+                            <div class="pull-left col-md-12 col-sm-12 col-xs-12" style="margin: 0px; padding: 0px;">
+                                <div class="col-md-6" style="margin: 0px; padding: 0 15px 0 0; max-width: 471px; min-width: 213px;">
+                                    <img style="width: 100%; height: 300px;" src="@Url.Action("GetImage", "Image", new { imageName = activities[i].ImagePath })">
+                                </div>
+                                <div class="col-md-6 col-sm-12 col-xs-12" style="margin: 0px; padding: 10px 0 0 0;">
+                                    @{ var description = activities[i].Description.Replace(Environment.NewLine, "<br/>"); }
+                                    <p>@Html.Raw(description)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                 }
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#LocationId").select2({
+            ajax: {
+                url: "/Home/CustomGetLocations",
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        query: params.term, // search term
+                        page: params.page
+                    };
+                },
+                processResults: function (data, params) {
+                    // parse the results into the format expected by Select2
+                    // since we are using custom formatting functions we do not need to
+                    // alter the remote JSON data, except to indicate that infinite
+                    // scrolling can be used
+                    params.page = params.page || 1;
+
+                    // !IMPORTANT! your every item in data.items has to have an .id property - this is the actual value that Select2 uses
+                    // Luckily the source data.items already have one
+                    return {
+                        results: data.items,
+                        pagination: {
+                            more: (params.page * 30) < data.total_count
+                        }
+                    };
+                },
+                cache: true
+            },
+            escapeMarkup: function (markup) {
+                return markup; // let our custom formatter work
+            },
+            minimumInputLength: 1,
+            templateResult: function (repo) {
+                if (repo.loading) return repo.text;
+                return repo.Name;
+            },
+            templateSelection: function (repo) {
+                return repo.Name || repo.text;
+            }
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#PropertyId').change(function () {
+            ChangeSearchSegment();
+        });
+
+        $('#PropIndicatorId').change(function () {
+            ChangeSearchSegment();
+        });
+
+        $('#LocationId').change(function () {
+            ChangeSearchSegment();
+        });
+
+        function ChangeSearchSegment() {
+            var segment = "";
+
+            var propType = $("#PropertyId option:selected").text();
+            var propInd = $("#PropIndicatorId option:selected").text();
+            var location = $("#select2-LocationId-container").text();
+
+            if (propType != "Property Type") {
+                segment = segment + propType.replace(/ /g, '-');
+            }
+            else {
+                segment = "property";
+            }
+            if (propInd != "") {
+                segment = segment + "-" + propInd.replace(/ /g, "-");
+            }
+            if (location != "") {
+                segment = segment + "-in-" + location.replace(/ /g, "-");
+            }
+
+            $("#searchForm").attr("action", "/property/" + segment.toLowerCase());
+        };
+    });
+</script>

@@ -1,0 +1,59 @@
+﻿@model List<RealtyWeb.Models.PostCard>
+
+@{
+    var targetId = string.Empty;
+    var type = Model != null && Model.Count > 0 ? Model.First().Type : string.Empty;
+
+    targetId = type == "Activity" ? "activityArea" : "recognitionArea";
+    AjaxOptions editOptions = new AjaxOptions
+    {
+        HttpMethod = "GET",
+        UpdateTargetId = targetId,
+        InsertionMode = InsertionMode.Replace
+    };
+
+    AjaxOptions deleteOptions = new AjaxOptions
+    {
+        Confirm = "Are you sure you want to cancel this item?",
+        HttpMethod = "POST",
+        UpdateTargetId = targetId,
+        InsertionMode = InsertionMode.Replace
+    };
+}
+
+<div class="row" style="overflow-y: auto; margin: 0px; padding: 0px;">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Image</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Count > 0)
+            {
+                foreach (var item in Model)
+                {
+                <tr>
+                    <th scope="row">@item.Id</th>
+                    <td>
+                        <img style="width: 50px; height: 50px;" src="@Url.Action("GetImage", "Image", new { imageName = item.ImagePath })" /></td>
+                    <td style="max-width: 156px;">
+                        <div style="width: 200px; height: 50px;">@item.Title </div>
+                    </td>
+                    <td style="max-width: 200px; min-width: 200px;">
+                        <div style="width: 265px; height: 54px; overflow: auto;">@item.Description</div>
+                    </td>
+                    <td>
+                        <span>@Ajax.ActionLink("Edit", "EditPostCard", new { id = item.Id }, editOptions, new { @style = "text-decoration:underline;" })</span> | 
+                        <span>@Ajax.ActionLink("Delete", "DeletePostCard", new { id = item.Id }, deleteOptions, new { @style = "text-decoration:underline;" })</span>
+                    </td>
+                </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

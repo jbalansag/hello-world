@@ -1,0 +1,12 @@
+﻿@model RealtyWeb.Models.PointOfInterest
+
+@using (Html.BeginCollectionItem("PointOfInterests"))
+{
+    <div style="padding: 1px;">
+        @Html.DropDownList("poiTypeId", ViewData["PoiTypes"] as IEnumerable<SelectListItem>, String.Empty, new { @style = "height: 26px; width: 100%; max-width: 219px;" })
+        @Html.TextBoxFor(model => model.Name, new { @style = "max-width: 1000px; width: 225px; height: 26px;" })
+        @Html.TextBoxFor(model => model.Distance, new { @style = "max-width: 50px; height: 26px;" })
+        @Html.HiddenFor(model => model.PoiId)
+        <button type="button" class="btnDelete" style="height: 26px;">Remove</button>    
+    </div>
+}

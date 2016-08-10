@@ -1,0 +1,187 @@
+﻿@{
+    ViewBag.Title = "Maintenance";
+    var siteInfo = ViewBag.SiteInfo as RealtyWeb.Models.Site;
+    var activities = ViewBag.Activities as List<RealtyWeb.Models.PostCard>;
+    var recognitions = ViewBag.Recognitions as List<RealtyWeb.Models.PostCard>;
+
+    AjaxOptions submitOptions = new AjaxOptions()
+    {
+        HttpMethod = "POST",
+        OnSuccess = "javascript:alert(\"Successfully Updated!\")",
+        OnFailure = "OnSubmitError"
+    };
+}
+
+
+<div class="row maintenance" style="margin: 0px; padding: 20px 0px;">
+    <div class="row" style="margin: 0px; padding: 0px;">
+        <div class="col-md-12" style="padding: 7px 1px 0 12px; height: 30px; background-color: #089de3; text-align: center;">
+            <span style="margin: 0px; padding: 0px; color: #fff; text-align: center;">Maintenance Page</span>
+        </div>
+    </div>
+    <div class="col-md-2" style="margin: 0px; padding: 0px; z-index: 2;">
+        <ul class="nav nav-tabs">
+            <li class="active"><a class="btn-info btn-sm" href="#siteInfo" data-toggle="tab">Site Info</a></li>
+            <li><a class="btn-info btn-sm" href="#activities" data-toggle="tab">Activities</a></li>
+            <li><a class="btn-info btn-sm" href="#recognition" data-toggle="tab">Recognition</a></li>
+        </ul>
+    </div>
+    <div class="col-md-10" style="margin: 0px; padding: 0px; z-index: 1">
+        <div class="tab-content">
+            <div class="tab-pane active" id="siteInfo">
+                <div>
+                    @using (Html.BeginForm("UpdateSiteInfo", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        <div class="col-md-12" style="margin: 0px; padding: 0px;">
+                            @Html.HiddenFor(x => siteInfo.Id)
+                            @Html.HiddenFor(x => siteInfo.ImagePath)
+
+                            @Html.AntiForgeryToken()
+                            <div class="form-horizontal">
+                                @Html.ValidationSummary(true)
+
+                                <div class="form-group">
+                                    @Html.Label("Image", new { @class = "control-label col-md-2", @style = "text-align: right;" })
+                                    <div class="col-md-8">
+                                        <div id="imageFrame" class="col-md-12" style="margin: 0px; padding: 0px; max-width: 450px;">
+                                            <img src="@if (!string.IsNullOrEmpty(siteInfo.ImagePath) && siteInfo.ImagePath.Length > 0)
+                                                      { 
+                                                        @Url.Action("GetImage", "Image", new { imageName = siteInfo.ImagePath })
+                                                      }
+                                                      else
+                                                      {
+                                                        @Url.Action("GetImage", "Image", new { imageName = "~/Content/unknownProfile.png" })
+                                                      }" style="width: 100%; height: 250px;" />
+                                        </div>
+                                        <div class="col-md-12" style="padding: 0px; margin: 6px 0 0 0;">
+                                            <input id="imageUpload" name="imageUpload" type="file" style="position: relative; width: 188px;">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(x => siteInfo.CompanyName, new { @class = "control-label col-md-2", @style = "text-align: right;" })
+                                    <div class="col-md-10">
+                                        @Html.TextBoxFor(x => siteInfo.CompanyName, new { @style = "width: 100%; max-width: 590px; padding-left: 7px; ", @maxlength = "100", @class = "formTextBox" })
+                                        @Html.ValidationMessageFor(x => siteInfo.CompanyName)
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(x => siteInfo.ContactUs, new { @class = "control-label col-md-2", @style = "text-align: right;" })
+                                    <div class="col-md-10">
+                                        @Html.TextBoxFor(x => siteInfo.ContactUs, new { @style = "width: 100%; max-width: 590px; padding-left: 7px;", @maxlength = "100", @class = "formTextBox" })
+                                        @Html.ValidationMessageFor(x => siteInfo.ContactUs)
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(x => siteInfo.AboutUs, new { @class = "control-label col-md-2", @style = "text-align: right;" })
+                                    <div class="col-md-10 ">
+                                        @Html.TextAreaFor(x => siteInfo.AboutUs, new { @style = "width: 100%; height: 180px; max-width: 590px; resize: none; padding:10px;" })
+                                        @Html.ValidationMessageFor(x => siteInfo.AboutUs)
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(x => siteInfo.Mission, new { @class = "control-label col-md-2", @style = "text-align: right;" })
+                                    <div class="col-md-10 ">
+                                        @Html.TextAreaFor(x => siteInfo.Mission, new { @style = "width: 100%; height: 180px; max-width: 590px; resize: none; padding:10px;" })
+                                        @Html.ValidationMessageFor(x => siteInfo.Mission)
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(x => siteInfo.Vision, new { @class = "control-label col-md-2", @style = "text-align: right;" })
+                                    <div class="col-md-10 ">
+                                        @Html.TextAreaFor(x => siteInfo.Vision, new { @style = "width: 100%; height: 180px; max-width: 590px; resize: none; padding:10px;" })
+                                        @Html.ValidationMessageFor(x => siteInfo.Vision)
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(x => siteInfo.Bulletin, new { @class = "control-label col-md-2", @style = "text-align: right;" })
+                                    <div class="col-md-10">
+                                        @Html.TextAreaFor(x => siteInfo.Bulletin, new { @style = "width: 100%; height: 180px; max-width: 590px; resize: none; padding:10px;" })
+                                        @Html.ValidationMessageFor(x => siteInfo.Bulletin)
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-9">
+                                        <input type="submit" value="Save changes" class="btn btn-success" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="tab-pane" id="activities">
+                <div class="col-md-12" style="margin: 0 0 23px 0; padding: 0px;"><a id="addActivity" class="btn btn-success btn-xs">Add Activity</a></div>
+                <div class="col-md-12" id="activityArea" style="margin: 0 0 23px 0; padding: 0px;">
+                    @Html.Partial("_PostCards", activities)
+                </div>
+            </div>
+            <div class="tab-pane" id="recognition">
+                <div class="col-md-12" style="margin: 0 0 23px 0; padding: 0px;"><a id="addRecognition" class="btn btn-success btn-xs">Add Recognition</a></div>
+                <div class="col-md-12" id="recognitionArea" style="margin: 0 0 23px 0; padding: 0px;">
+                    @Html.Partial("_PostCards", recognitions)
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $('#addActivity').click(function () {
+        $.get('@Url.Action("AddActivity", "Maintenance")', function (response) {
+            $('#activityArea').html("");
+            $('#activityArea').append(response);
+        });
+    });
+
+    $('#addRecognition').click(function () {
+        $.get('@Url.Action("AddRecognition", "Maintenance")', function (response) {
+            $('#recognitionArea').html("");
+            $('#recognitionArea').append(response);
+        });
+    });
+
+    function OnSubmitError(data) {
+        alert(data.statusText);
+    }
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#imageUpload").on('change', function () {
+            var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.gif|.png|.bmp)$/;
+            if (regex.test($(this).val().toLowerCase())) {
+                if ($.browser.msie && parseFloat(jQuery.browser.version) <= 9.0) {
+                    $("#imageFrame").show();
+                    $("#imageFrame")[0].filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = $(this).val();
+                }
+                else {
+                    if (typeof (FileReader) != "undefined") {
+                        $("#imageFrame").html("");
+                        $("#imageFrame").show();
+                        $("#imageFrame").append("<img />");
+                        var reader = new FileReader();
+                        reader.onload = function (e) {
+                            $("#imageFrame img").attr({
+                                src: e.target.result,
+                                style: "width: 450px; height: 250px;"
+                            });
+                        }
+                        reader.readAsDataURL($(this)[0].files[0]);
+                    } else {
+                        alert("This browser does not support FileReader.");
+                    }
+                }
+            } else {
+                alert("Please upload a valid image file.");
+            }
+        });
+    });
+</script>

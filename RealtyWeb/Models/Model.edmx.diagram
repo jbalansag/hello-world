@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="7bfeb57f793e46bdb05c9a1b5b261e6b" Name="Diagram1" ZoomLevel="105">
+        <EntityTypeShape EntityType="RealtyWeb.Models.AppUser" Width="1.5" PointX="0.75" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="RealtyWeb.Models.Barangay" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RealtyWeb.Models.CityMunicipality" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RealtyWeb.Models.Constant" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RealtyWeb.Models.Location" Width="1.5" PointX="5.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RealtyWeb.Models.LocationPath" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RealtyWeb.Models.PointOfInterestType" Width="1.5" PointX="3" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="RealtyWeb.Models.Property" Width="1.5" PointX="0.75" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RealtyWeb.Models.PropertyIndicator" Width="1.5" PointX="0.75" PointY="16.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="RealtyWeb.Models.Province" Width="1.5" PointX="7.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RealtyWeb.Models.ClientInquiry" Width="1.5" PointX="5.25" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="RealtyWeb.Models.ImageGallery" Width="1.5" PointX="5.25" PointY="19.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RealtyWeb.Models.PointOfInterest" Width="1.5" PointX="5.25" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RealtyWeb.Models.PropertyEntry" Width="1.5" PointX="3" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="RealtyWeb.Models.UserFavorite" Width="1.5" PointX="8.25" PointY="10.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RealtyWeb.Models.UserClaim" Width="1.5" PointX="3" PointY="16.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RealtyWeb.Models.UserLogin" Width="1.5" PointX="3" PointY="19.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="RealtyWeb.Models.UserRole" Width="1.5" PointX="3" PointY="21.75" IsExpanded="true" />
+        <AssociationConnector Association="RealtyWeb.Models.FK_dbo_UserClaim_dbo_AppUser_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="RealtyWeb.Models.FK_dbo_UserLogin_dbo_AppUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="RealtyWeb.Models.FK_Trn_PropertyEntry_AppUser" ManuallyRouted="false" />
+        <AssociationConnector Association="RealtyWeb.Models.FK_Trn_UserFavorite_AppUser" ManuallyRouted="false" />
+        <AssociationConnector Association="RealtyWeb.Models.FK_Trn_PointOfInterest_Bas_PointOfInterestType" ManuallyRouted="false" />
+        <AssociationConnector Association="RealtyWeb.Models.FK_Trn_PropertyEntry_Bas_Property" ManuallyRouted="false" />
+        <AssociationConnector Association="RealtyWeb.Models.FK_Trn_PropertyEntry_Bas_PropertyIndicator" ManuallyRouted="false" />
+        <AssociationConnector Association="RealtyWeb.Models.FK_Trn_ClientInquiry_Trn_PropertyEntry" ManuallyRouted="false" />
+        <AssociationConnector Association="RealtyWeb.Models.FK_Trn_ImageGallery_Trn_PropertyEntry" ManuallyRouted="false" />
+        <AssociationConnector Association="RealtyWeb.Models.FK_Trn_PointOfInterest_Trn_PropertyEntry" ManuallyRouted="false" />
+        <AssociationConnector Association="RealtyWeb.Models.FK_Trn_UserFavorite_Trn_PropertyEntry" ManuallyRouted="false" />
+        <AssociationConnector Association="RealtyWeb.Models.UserUserRole" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="RealtyWeb.Models.ClientMessage" Width="1.5" PointX="9.75" PointY="0.75" />
+        <EntityTypeShape EntityType="RealtyWeb.Models.Site" Width="1.5" PointX="9.75" PointY="4.75" />
+        <EntityTypeShape EntityType="RealtyWeb.Models.PostCard" Width="1.5" PointX="10.75" PointY="8.75" />
+        <EntityTypeShape EntityType="RealtyWeb.Models.Subscription" Width="1.5" PointX="11.75" PointY="0.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

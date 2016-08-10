@@ -1,0 +1,305 @@
+﻿@model RealtyWeb.Models.PropertyEntry
+
+@{
+    ViewBag.Title = "Edit";
+
+    AjaxOptions options = new AjaxOptions
+    {
+        HttpMethod = "GET",
+        OnSuccess = "UpdateDOM(data)",
+        InsertionMode = InsertionMode.Replace,
+        LoadingElementId = "divLoading"
+    };
+}
+
+<div class="row" style="margin:0px; padding:0px;">
+    <h4 class="col-md-5" style="margin: 15px 0 0 0;">PROPERTY EDIT</h4>
+    @if((TempData["EditSuccessful"] as bool?) == true)
+    {
+        <div class="col-md-7" style="margin:0; color:green">
+            <h4 style=" margin: 17px 0 0 0;">Successfully Updated!&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Modified Date: @DateTime.Now</h4>
+        </div>
+    }
+    else if((TempData["EditSuccessful"] as bool?) == false)
+    {
+        <div class="col-md-7" style="margin: 0; color:red"><h4 style=" margin: 17px 0 0 0;">Error encountered while saving data!</h4></div>
+    }
+    else if ((TempData["CreateSuccessful"] as bool?) == true)
+    {
+         <div class="col-md-7" style="margin:0; color:green">
+            <h4 style=" margin: 17px 0 0 0;">Successfully Created!&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Created Date: @DateTime.Now</h4>
+        </div>
+    }
+</div>
+
+<hr style="margin-top: 15px; margin-bottom: 15px; border-top: 1px solid rgb(153, 153, 153);" />
+
+<div class="row" style="margin: 0px;">
+
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="row" style="margin: 0px;">
+            <div class="col-md-4">
+
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(model => model.Status)
+                @Html.HiddenFor(model => model.CreatedBy)
+                @Html.HiddenFor(model => model.CreatedDate)
+                @Html.HiddenFor(model => model.ContactPerson)
+
+                <div class="form-horizontal">
+                    @Html.ValidationSummary(true)
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.PropertyEntryId, new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.TextBoxFor(model => model.PropertyEntryId, new { @style = "width: 187px;", @class = "formTextBox webRefProperty", @readonly = ""})
+                            @Html.ValidationMessageFor(model => model.PropertyEntryId)
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.PropIndicatorId, new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.DropDownList("PropIndicatorId", null, String.Empty, new { @style = "height: 26px; width: 187px; border-color: rgb(169, 169, 169);" })
+                            @Html.ValidationMessageFor(model => model.PropIndicatorId)
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.PropertyId, new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.DropDownList("PropertyId", null, String.Empty, new { @style = "height: 26px; width: 187px; border-color: rgb(169, 169, 169);" })
+                            @Html.ValidationMessageFor(model => model.PropertyId)
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Price, new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.TextBoxFor(model => model.Price, new { @style = "width: 187px;", @class = "formTextBox" })
+                            @Html.ValidationMessageFor(model => model.Price)
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.PropertyTitle, new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.TextBoxFor(model => model.PropertyTitle, new { @style = "width: 510px; max-width: 510px;", @class = "formTextBox" })
+                            @Html.ValidationMessageFor(model => model.PropertyTitle)
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Baths, new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.TextBoxFor(model => model.Baths, new { @style = "width: 187px;", @class = "formTextBox" })
+                            @Html.ValidationMessageFor(model => model.Baths)
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Bedrooms, new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.TextBoxFor(model => model.Bedrooms, new { @style = "width: 187px;", @class = "formTextBox" })
+                            @Html.ValidationMessageFor(model => model.Bedrooms)
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.LotArea, new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.TextBoxFor(model => model.LotArea, new { @style = "width: 187px;", @class = "formTextBox" })
+                            @Html.ValidationMessageFor(model => model.LotArea)
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.FloorArea, new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.TextBoxFor(model => model.FloorArea, new { @style = "width: 187px;", @class = "formTextBox" })
+                            @Html.ValidationMessageFor(model => model.FloorArea)
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-horizontal">
+                    <div class="form-group" style=" margin-bottom: 6px;">
+                        <div class="col-md-6">
+                            @Html.LabelFor(model => model.HasGarden, new { @class = "control-label col-md-8" })
+                            <div class="col-md-4">
+                                @Html.CheckBoxFor(model => model.HasGarden, new { @style = "height: 26px;" })
+                                @Html.ValidationMessageFor(model => model.HasGarden)
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            @Html.LabelFor(model => model.AllowPet, new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.CheckBoxFor(model => model.AllowPet, new { @style = "height: 24px;" })
+                                @Html.ValidationMessageFor(model => model.AllowPet)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Address1, new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.TextBoxFor(model => model.Address1, new { @style = "width: 187px;", @class = "formTextBox", @placeholder = "(RM./FLR./UNIT NO. & BLDG. NAME) (HOUSE/LOT & BLK. NO.) (STREET NAME) (SUBDIVISION)" })
+                            @Html.ValidationMessageFor(model => model.Address1)
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Address2, new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.TextBoxFor(model => model.Address2, new { @style = "width: 187px;", @class = "formTextBox", @placeholder = "(BARANGAY/DISTRICT/LOCALITY)" })
+                            @Html.ValidationMessageFor(model => model.Address2)
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Address3, new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.TextBoxFor(model => model.Address3, new { @style = "width: 187px;", @class = "formTextBox", @placeholder = "(CITY/MUNICIPALITY)" })
+                            @Html.ValidationMessageFor(model => model.Address3)
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Address4, new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.TextBoxFor(model => model.Address4, new { @style = "width: 187px;", @class = "formTextBox", @placeholder = "(PROVINCE)" })
+                            @Html.ValidationMessageFor(model => model.Address4)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <hr style="margin-top: 0px; margin-bottom: 15px; border-top: 1px solid rgb(153, 153, 153);" />
+        
+        <div class="row" style="margin-right: 0px;">
+            <div class="col-md-8">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PropertyDetails, new { @class = "control-label col-md-12" })
+                    <div class="col-md-12">
+                        @Html.TextAreaFor(model => model.PropertyDetails, new { @style = "width: 100%; height: 198px; max-width: 590px; resize: none" })
+                        @Html.ValidationMessageFor(model => model.PropertyDetails)
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4" style="margin-top: -8px; padding:0px;">
+                <div class="col-md-5" style="height: 30px; padding: 0px;">
+                    <h4>+/-&nbsp;&nbsp;&nbsp;&nbsp;IMAGES</h4>
+                </div>
+                <div class="col-md-7" style="padding: 0px; padding-top: 7px; height: 30px;">
+                    @Html.Hidden("propertyEntryId", Model.PropertyEntryId)
+                    <input id="fileUpload" type="file" multiple class="fileUpload" style="position: relative; width: 100%;">
+                </div>
+                <div style="height: 270px; border: 0px solid rgb(153, 153, 153);">
+                    <div id="imageList" style="background-color: #FFF; border: 1px solid rgb(169, 169, 169); float: left; overflow: auto; height: 200px; width: 100%; padding: 5px;">
+                        @Html.Partial("_ImageList", Model.ImageGallery.ToList())
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <hr style="margin-top: 0px; margin-bottom: 0px; border-top: 1px solid rgb(153, 153, 153);" />
+        
+        <div class="row" style="margin: 0px;">
+            <div class="col-md-8">
+                <div class="row" style="margin: 0px;">
+                    <div class="col-md-4" style="padding: 0px;">
+                        <h4>POINT OF INTEREST</h4>
+                    </div>
+                    <div class="col-md-1" style="margin-top: 9px; margin-left: 0px; padding: 0px;">
+                        <a id="addPoiRow" class="addPoiRow btn btn-success btn-xs"><strong>+</strong> ADD</a>
+                    </div>
+                </div>
+
+                <div class="row" style="height: 177px; border: 1px solid rgb(153, 153, 153); overflow-y: scroll; background-color: #fff; margin: 0 25px 0 0;">
+                    <table id="poiList" class="poiList" style="width: 100%">
+                        <tbody>
+                            @foreach (var item in Model.PointOfInterests)
+                            {
+                                @Html.Partial("_PointOfIntestList", item, ViewData)
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="col-md-4" style="margin-top: 37px;">
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-9">
+                        <input type="submit" value="Submit" class="btn btn-default" />
+                        <a class="btn btn-default" href="@Url.Action("Index", "PropertyEntry")">Cancel</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#fileUpload").on('change', function () {
+
+            var formdata = new FormData();
+            var fileInput = document.getElementById('fileUpload');
+            var propertyEntryId = document.getElementById('propertyEntryId').value;
+
+            for (i = 0; i < fileInput.files.length; i++) {
+                formdata.append(fileInput.files[i].name, fileInput.files[i]);
+            }
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/PropertyEntry/UploadImageAction');
+
+            formdata.append("propertyEntryId", propertyEntryId);
+
+            xhr.send(formdata);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    if (xhr.responseText != "Error") {
+                        alert("Images uploaded successfully!");
+                        $('#imageList').html(xhr.responseText);
+                    }
+                    else {
+                        alert("Error Occured! Please try again. . ");
+                    }
+                }
+            }
+        });
+    });
+
+    function UpdateImageList(response) {
+        $('#imageList').html(response);
+    }
+
+    $('#addPoiRow').click(function () {
+        $.get('@Url.Action("AddNewPOI", "PropertyEntry")', function (response) {
+            $('#poiList').append(response);
+        });
+    });
+
+    function UpdateDOM(response) {
+        $('#poiList').append(response);
+    }
+
+    $("#poiList").on('click', '.btnDelete', function () {
+        $(this).closest('div').remove();
+    });
+</script>
+
+
+

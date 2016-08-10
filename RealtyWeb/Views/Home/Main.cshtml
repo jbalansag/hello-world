@@ -1,0 +1,313 @@
+﻿@using PagedList.Mvc;
+@using RealtyWeb.Models;
+
+@model SearchFilter
+@{
+    var propertyList = ViewBag.PropertyList as List<RealtyWeb.Models.PropertyEntry>;
+ }
+
+@{
+    ViewBag.Title = "Property For Sale";
+}
+
+<script>
+    $(document).ready(function () {
+        $("#LocationId").select2({
+            ajax: {
+                url: "/Home/CustomGetLocations",
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        query: params.term, // search term
+                        page: params.page
+                    };
+                },
+                processResults: function (data, params) {
+                    // parse the results into the format expected by Select2
+                    // since we are using custom formatting functions we do not need to
+                    // alter the remote JSON data, except to indicate that infinite
+                    // scrolling can be used
+                    params.page = params.page || 1;
+
+                    // !IMPORTANT! your every item in data.items has to have an .id property - this is the actual value that Select2 uses
+                    // Luckily the source data.items already have one
+                    return {
+                        results: data.items,
+                        pagination: {
+                            more: (params.page * 30) < data.total_count
+                        }
+                    };
+                },
+                cache: true
+            },
+            escapeMarkup: function (markup) {
+                return markup; // let our custom formatter work
+            },
+            minimumInputLength: 1,
+            templateResult: function (repo) {
+                if (repo.loading) return repo.text;
+                return repo.Name;
+            },
+            templateSelection: function (repo) {
+                return repo.Name || repo.text;
+            }
+        });
+
+        //disable right-click
+        $('.carouselPanel').on("contextmenu", function (e) {
+            return false;
+        });
+    });
+</script>
+
+<div class="navbar navbar-inverse navbar-fixed-top" style="z-index: 998; height: 108px; margin-top: 51px; margin-right: auto; margin-left: auto; background-color: #089de3; border-bottom: 1px solid #089de3; box-shadow: 0 0 100px rgb(255, 165, 0);">
+    @using (Html.BeginForm("PropertySearch", "Home", FormMethod.Get, new { enctype = "multipart/form-data", @style = "width: 916px; margin-left: 187px; margin-top: 10px; width: 968px; margin-left: auto; margin-top: 10px; margin-right: auto;" }))
+    {
+        <div class="col-md-9" style="margin: 0; padding:0px; max-width: 725px;">
+            <div class="row" style="margin: 0 0 10px 0;">
+                <div style="padding: 0px; margin-right: 6px; float: left; position: relative">
+                    <p style="margin: 0px; font-size: 11px; color: #fff">
+                        <label>Property Type</label>
+                    </p>
+                    @Html.DropDownListFor(x => x.PropIndicatorId, null, "Any", new { @style = "height: 25px; padding: 0px 12px; width: 186px; max-width: 186px; font-size: 13px;", @class = "col-md-1 form-control" })
+                </div>
+                <div style="padding: 0px; margin-right: 6px; float: left; position: relative">
+                    <p style="margin: 0px; font-size: 11px; color: #fff">
+                        <label>Min Price</label>
+                    </p>
+                    @Html.DropDownListFor(x => x.MinPrices, null, "Any", new { @style = "height: 25px; padding: 0px 12px; width: 112px; max-width: 112px; font-size: 13px;", @class = "col-md-1 form-control" })
+                </div>
+                <div style="padding: 0px; margin-right: 6px; float: left; position: relative">
+                    <p style="margin: 0px; font-size: 11px; color: #fff">
+                        <label>Max Price</label>
+                    </p>
+                    @Html.DropDownListFor(x => x.MaxPrices, null, "Any", new { @style = "height: 25px; padding: 0px 12px; width: 112px; max-width: 112px; font-size: 13px;", @class = "col-md-1 form-control" })
+                </div>
+                <div style="padding: 0px; margin-right: 6px; float: left; position: relative">
+                    <p style="margin: 0px; font-size: 11px; color: #fff">
+                        <label>Bedrooms</label>
+                    </p>
+                    @Html.DropDownListFor(x => x.Beds, null, "Any", new { @style = "height: 25px; padding: 0px 12px; width: 112px; max-width: 112px; font-size: 13px;", @class = "col-md-1 form-control" })
+                </div>
+                <div style="padding: 0px; margin-right: 6px; float: left; position: relative">
+                    <p style="margin: 0px; font-size: 11px; color: #fff">
+                        <label>Baths</label>
+                    </p>
+                    @Html.DropDownListFor(x => x.Baths, null, "Any", new { @style = "height: 25px; padding: 0px 12px; width: 112px; max-width: 112px; font-size: 13px;", @class = "col-md-1 form-control" })
+                </div>
+            </div>
+        
+            <div class="row" style="margin: 10px 0 0 0;">
+            @Html.DropDownListFor(x => x.PropertyId, null, "Any", new { @style = "height: 34px; width: 186px; max-width: 186px; margin-right: 6px;", @class = "col-md-1 form-control" })
+            <div class="col-md-5" style="padding: 0px; font-size: 13px; font-family: sans-serif; color: #555;">
+                @Html.AutocompleteFor(x => x.SearchTerm, x => x.LocationId, "GetLocations", "PropertyEntry", false, new { htmlAttributes = new { @class = "form-control", @style = "max-width: 465px; margin-right: 6px;", @placeholder = "Search for a City, Suburb or Web Ref . . .", @onfocus = "this.placeholder = ''", @onblur = "this.placeholder = 'Search for a City, Suburb or Web Ref . . .'" } })
+            </div>
+            <span style="margin-left: 99px; padding: 0px;">
+                <button id="btnFind" type="submit" class="btn btn-success" style="width: 66px; font-weight: bold;">Find</button>
+            </span>
+        </div>
+        </div>
+        <div class="col-md-3" style="margin:0 0 0 -50px; padding:0px;">
+            <h2 style="color: #fff; margin-top: 15px;">Find Property In</h2>
+            <div style="margin-top: 3px; font-size: 15px;">
+                <select id="LocationId" name="LocationId" class="js-data-example-ajax" style="width: 210px;">
+                    <option value="" selected="selected">Philippines</option>
+                </select>
+            </div>
+        </div>
+    }
+</div>
+
+<div class="row" style="margin-top: 110px; margin-bottom: 25px; background-color:#fff; margin-right: 0px; margin-left: 0px; padding-bottom: 12px;">
+    <div class="row" style="margin:0px; padding: 15px 0 0 15px;">
+        <span><a href="@Url.Action("Index", "Home", null)" style="text-decoration:underline">Home</a></span> <i class="fa fa-chevron-right" style="font-size: 10px; color: #428bca;"></i>
+        <span>Main</span>
+    </div>
+    @{int mod = propertyList.Count() / 3;}
+    @if (mod > 0)
+    {
+        <div class="row" style=" margin: 0 0 0 16px; padding: 0px;">
+            <div style="float: left; margin-right: 10px;">
+                <h3>Featured Property . .</h3>
+            </div>
+        </div>
+        <div id="carousel-example-generic" data-pause="hover" data-interval="5000" class="carousel slide" data-ride="carousel" style="width: 720px; margin-left: auto; margin-right: auto;">
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner">
+                @for (var i = 0; i <= (mod - 1); i++)
+                {
+                    var classAttr = i == 0 ? "item active" : "item";
+                    <div class="@classAttr">
+                    @if (propertyList.Count() >= ((i + 1) * 3))
+                    {
+                        for (var x = (i * 3); x < ((i + 1) * 3); x++)
+                        {
+                           <div id="carouselItem" class="col-md-6 carouselPanel" style="margin: 0px; padding: 5px; width: 240px;">
+                               <a data-fancybox-type="iframe" href="@Url.Action("Details", "Home", new { id = propertyList[x].PropertyEntryId })" title="" class="title modalDetails" onclick="" style="text-decoration:none;">
+                                       <div class="pull-left" style="margin-bottom: 7px;">
+                                            <img width="230" class="pull-left" height="198" src="
+                                                        @if (propertyList[x].ImageGallery.Count() > 0)
+                                                        {
+                                                            @Url.Action("GetImage", "Image", new { imageName = propertyList[x].ImageGallery.FirstOrDefault().ImagePath })
+                                                        }">
+                                        </div>
+                                        @{ var bedroomStr = (propertyList[x].Bedrooms > 0) ? propertyList[x].Bedrooms + " bedroom " : string.Empty;
+                                           var type = propertyList[x].Property.PropertyName + " ";
+                                           var indicator = propertyList[x].PropertyIndicator.PropIndicatorName + " in ";
+                                           var address2 = (!string.IsNullOrEmpty(propertyList[x].Address2)) ? propertyList[x].Address2 + ", " : string.Empty;
+                                           var address3 = (!string.IsNullOrEmpty(propertyList[x].Address3)) ? propertyList[x].Address3 : string.Empty;
+                                           var details = bedroomStr + type + indicator + address2 + address3;
+                                         }
+                                        <p>
+                                            @details
+                                       </p>
+                                       <h4>
+                                            ₱ @propertyList[x].Price.ToString("0,0")
+                                       </h4>
+                              
+                                </a>
+                           </div>
+                        }
+                    }
+                     </div>
+                }
+            </div>
+       
+            <!-- Controls -->
+            <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev" style="left: -107px; background-image: none;">
+                <span class="glyphicon glyphicon-chevron-left" style="color:#444;"></span>
+            </a>
+            <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next" style="right: -107px; background-image: none;">
+                <span class="glyphicon glyphicon-chevron-right" style="color:#444;"></span>
+            </a>
+        </div>
+        <div style="width: 710px; margin-left:auto; margin-right:auto; margin-top: 3px;margin-bottom: 35px;">
+            @Html.ActionLink("Show more featured properties >>", "PropertySearch", "Home", new
+               {
+                   orderby = Model.OrderMethod,
+                   propertyId = Model.PropertyId,
+                   propIndicatorId = Model.PropIndicatorId,
+                   searchTerm = Model.SearchTerm,
+                   minPrices = Model.MinPrices,
+                   maxPrices = Model.MaxPrices,
+                   beds = Model.Beds,
+                   baths = Model.Baths
+               }, new { @class = "btn btn-success", @style = "width:100%" }) 
+        </div>
+    }
+    <!-- Carousel -->
+
+    @*<div class="col-md-9" style="margin: 0px;padding: 0 15px 0 15px;">
+        <div class="col-md-12" style="background-color: #fff; height: 280px; margin: 0px; padding: 0px; border: 1px solid #d2d1d1; box-shadow: 0 2px 5px #d2d1d1, inset 0 -1px 1px #fff; margin-bottom: 15px;">
+            <div class="col-md-6">
+                <h4 style="color: #90949c; border-bottom: 1px solid rgba(0, 0, 0, 0.51); padding-bottom: 5px;">Recognitions</h4>
+                <div class="col-md-12" style="margin: 0px; padding: 0px; height: 220px; min-width: 302px">
+                    <div data-pause="hover" data-interval="3000" class="carousel slide" data-ride="carousel" style="width: 100%;">
+                        <!-- Wrapper for slides -->
+                        <div class="carousel-inner">
+                            @for (var i = 0; i < recognitions.Count(); i++)
+                            {
+                                var classAttr = i == 0 ? "item active" : "item";
+                                <div class="@classAttr">
+                                    <div class="carouselPanel" style="margin: 0px; padding: 0px; width: 100%;">
+                                        <div class="pull-left">
+                                            <img style="width: 317.17px; height: 216px;" src="@Url.Action("GetImage", "Image", new { imageName = recognitions[i].ImagePath })">
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <h4 style="color: #90949c;border-bottom: 1px solid rgba(0, 0, 0, 0.51); padding-bottom: 5px;">Bulletin</h4>
+                <div style="height: 207px; overflow: auto;">
+                    @Html.Raw(bulletin)
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12" style="background-color: #fff; height: 242px; margin: 0px; padding: 0px; border: 1px solid #d2d1d1; box-shadow: 0 2px 5px #d2d1d1, inset 0 -1px 1px #fff;">
+            <h4 style="margin-left: 15px; margin-right: 15px;color: #90949c; border-bottom: 1px solid rgba(0, 0, 0, 0.51); padding-bottom: 5px;">Activities</h4>
+            <div class="row" style="padding: 0px; margin: 0 15px 0 0; overflow: auto; height: 185px;">
+                @foreach (var item in activities)
+                {
+                    <div class="row" style="margin: 0 0 15px 0; padding:0px;">
+                        <div class="col-md-5" style="margin: 0px;">
+                            <img style="width: 246px; height: 185px;" src="@Url.Action("GetImage", "Image", new { imageName = item.ImagePath })">
+                        </div>
+                        <div class="col-md-7" style="margin: 0px; height: 185px; overflow: hidden;">
+                            <p><strong>@item.Title</strong></p>
+                            <p>@item.Description</p>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3" style="margin: 0 0 30px 0; padding: 0 15px 0 0;">
+        <div>
+            <div style="background-color: #fff;border: 1px solid #ddd;padding: 12px 0 11px 13px;">
+                <h3 style="margin: 0px; color: #428bca; padding: 0px;">Property For Sale
+                </h3>
+            </div>
+            <ul class="list-group" style="margin-bottom: 15px;">
+                @foreach (var type in propertyTypes)
+                {
+                    <li class="list-group-item indicator-content" style="border-radius: 0px;">
+                        @Html.ActionLink(type.PropertyName, "PropertySearch", "Home", new
+                                                      {
+                                                          propertyId = type.PropertyId,
+                                                          propIndicatorId = 1
+                                                      }, null)
+                    </li>
+                }
+            </ul>
+            <div class="row" id="sendMessage2" style="padding: 0px; margin: 0px;">
+                <div class="row" style="margin: 0px; padding: 0px; border: 1px solid #e0e0e0; background-color: #fff; border-radius: 3px;">
+                    <div class="col-xs-12" style="padding: 10px 13px;">
+                        <div class="col-xs-12" style="padding: 6px 1px 0 12px; height: 27px; background-color: #089de3; margin-bottom: 10px; text-align: center; border-top-left-radius: 3px; border-top-right-radius: 3px;">
+                            <span style="margin: 0px; padding: 0px; color: #fff; text-align: center;">Leave a Message</span>
+                        </div>
+
+                        @using (Ajax.BeginForm("AddClientMessage", submitMessageOptions))
+                        {
+                            <div class="col-xs-12" style="margin: 0px; padding: 0px;">
+                                <span style="margin: 0 2px 0 -7px; color: red;">*</span><span><input type="text" name="name" placeholder="Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Name'" style="height: 23px; margin: 0 0 10px 0; padding-top: 1px; border: 1px solid #bdc7d8;" /></span>
+                            </div>
+                            <div class="col-xs-12" style="margin: 0px; padding: 0px;">
+                                <span style="margin: 0 2px 0 -7px; color: red;">*</span><span><input type="text" name="email" placeholder="Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email'" style="height: 23px; margin: 0 0 10px 0; padding-top: 1px; border: 1px solid #bdc7d8;" /></span>
+                            </div>
+                            <div class="col-xs-12" style="margin: 0px; padding: 0px;">
+                                <span style="margin: 0 2px 0 -7px; color: red;">*</span><span><input type="text" name="mobileNo" placeholder="Mobile Number" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Mobile Number'" style="height: 23px; margin: 0 0 10px 0; padding-top: 1px; border: 1px solid #bdc7d8;" /></span>
+                            </div>
+                            <div class="col-xs-12" style="margin: 0px; padding: 0px;">
+                                <span style="margin: 0 2px 0 -7px; color: red;">*</span><span><textarea name="message" placeholder="Type your Message here. ." onfocus="this.placeholder = ''" onblur="this.placeholder = 'Type your Message here. . '" style="min-height: 30px; max-height: 40px; resize: none; width: 100%; padding: 3px 10px; border: 1px solid #bdc7d8;"></textarea></span>
+                            </div>
+                            <div class="col-xs-12" style="margin: 0px; padding: 0px;">
+                                <input class="btn btn-success" type="submit" value="Send Message" style="width: 100%; max-width: 319px; height: 27px; font-size: 11px;" />
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>*@
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.modalDetails').fancybox({
+            fitToView: false,
+            width: '800px',
+            height: '630px',
+            autoSize: false,
+            closeClick: false,
+            openEffect: 'none',
+            closeEffect: 'none',
+            padding: 0,
+            closeBtn: false
+        });
+    });
+</script>

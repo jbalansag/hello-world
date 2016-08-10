@@ -1,0 +1,293 @@
+﻿@using PagedList.Mvc;
+@using RealtyWeb.Models;
+@using RealtyWeb.Common;
+
+@model SearchFilter
+
+@{
+    var accountList = ViewBag.AccountList as PagedList.IPagedList;
+    ViewBag.Title = "Agencies & Brokers in the Philippines";
+
+    var ajaxOption = new AjaxOptions()
+    {
+        HttpMethod = "POST",
+        OnSuccess = "javascript:alert(\"A message has been successfully sent to the Broker.\")",
+        OnFailure = "OnSubmitError"
+    };
+}
+
+<div class="row filter-container" style="margin: 0px; padding: 0px;">
+    <div class="navbar navbar-inverse navbar-fixed-top filter-content">
+        <div class="body-content container">
+            @using (Html.BeginForm("broker-search", "profile", FormMethod.Get, new { id = "searchForm", enctype = "multipart/form-data", @style = "width: 100%;margin-left: auto;margin-top: 18px;margin-right: auto;" }))
+            {
+                <div class="row" style="padding: 0px; margin: 0px;">
+                    <div class="col-md-9 col-sm-12 col-xs-12" style="margin: 0px; padding: 0px;">
+                        <div class="row" style="margin: 0px;">
+                            <div class="col-md-3 col-sm-3 col-xs-12 shown-small-screen filter-item">
+                                @Html.DropDownListFor(x => x.UserEntityId, null, "Any", new { @style = "height: 34px; padding: 0 0 0 12px; width: 100%; margin-right: 6px; border: none; border-radius: 0px;" })
+                            </div>
+                            <div class="col-md-7 col-sm-7 col-xs-12 shown-small-screen filter-item">
+                                @Html.AutocompleteFor(x => x.SearchTerm, x => x.LocationId, "GetLocations", "PropertyEntry", false, new { htmlAttributes = new { @style = "width:100%; max-width:1000px; margin-right: 6px; border: none; border-radius: 0px;", @placeholder = "Find Agencies, Brokers & Agents. .", @onfocus = "this.placeholder = ''", @onblur = "this.placeholder = 'Find Agencies, Brokers/Agents'" } })
+                            </div>
+                            <div class="col-md-2 col-sm-2 col-xs-12 shown-small-screen filter-item filter-rightpad-remove">
+                                <button id="btnFind" type="submit" class="btn btn-success" style="width: 100%; font-weight: bold; height: 34px; border: none; border-radius: 0px; font-size: 16px;">Find</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-12 col-xs-12 hide-small-screen" style="margin: 0px; padding: 0px;">
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<div class="row broker-content-container">
+    <div class="col-md-9 property-container" id="propertyList">
+        @{ 
+            var userEntityName = ViewBag.DefaultUserEntityName == null ? "Philippines" : ViewBag.DefaultUserEntityName;
+            var label = ViewBag.DefaultUserEntityName == null ? "Agencies and Brokers in " : ViewBag.DefaultUserEntityName + " in the "; 
+         }
+        <h3 style="margin: 0 0 10px 0; padding: 0px;">@label<strong style="color: #428bca;">Philippines</strong></h3>
+        <div class="row" style="margin: 0 0 30px 0; padding: 0px;">
+            <span><a href="@Url.Action("Index", "Home", null)" style="text-decoration:underline">Home</a></span> <i class="fa fa-chevron-right" style="font-size: 10px; color: #428bca;"></i>
+            <span><a href="@Url.Action("broker-search", "Profile", null)" style="text-decoration:underline">Agencies & Brokers</a></span> <i class="fa fa-chevron-right" style="font-size: 10px; color: #428bca;"></i>
+            <span>@userEntityName</span>
+        </div>
+
+        @if (accountList.TotalItemCount == 0)
+        {
+            <div class="col-md-6" style="margin: 32px 0 400px 0; padding: 0px;">Sorry, your search returned 0 results. . .</div> 
+        }
+        else
+        {
+            <div class="row" style="margin: 0 0 6px 0;">
+                <div class="col-md-3 col-sm-3 col-xs-12" style="margin-left: 0px; padding: 0;">
+                    <div class="row" style="font-size: 11px; padding: 0; margin: 0px;">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="font-size: 11px; height: 30px; width: 100%">
+                            <span style="font-weight: bold;">Order by:</span> @ViewBag.OrderByName <i class="fa fa-caret-down" style="font-size: 12px; float: right; margin-left: 5px;"></i>
+                        </button>
+                        <ul class="dropdown-menu" style="font-size: 11px; width: 100%; margin: 0 50px 0 0">
+                            @foreach (var item in (ViewBag.OrderByItems as List<RealtyWeb.Models.Constant>))
+                            {
+                                <li>
+                                    @Html.ActionLink(item.ConstantValue, "broker-search", new
+                               {
+                                   userEntityId = Model.UserEntityId,
+                                   orderMethod = item.ConstantId,
+                                   propIndicatorId = Model.PropIndicatorId,
+                                   searchTerm = Model.SearchTerm,
+                               })
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-9 col-sm-9 col-xs-12" style="padding: 8px 0 0 13px; margin: 0px;">
+                    @{
+                            var from = (accountList.PageNumber * accountList.PageSize) - (accountList.PageSize - 1);
+                            var to = accountList.HasNextPage ? accountList.PageNumber * accountList.PageSize : accountList.TotalItemCount;
+                            var total = accountList.TotalItemCount;   
+                     }
+
+                    Showing @from - @to of @total
+                </div>
+            </div>
+            <div class="row" style="margin: 0px;">
+                @foreach (var item in ViewBag.AccountList as IEnumerable<RealtyWeb.Models.AppUser>)
+                {
+                    <a href="~/Profile/Info?agentId=@item.Id" title="" class="title modalDetails" onclick="">
+                        <div class="row" style="margin: 0px 0 12px 0; padding: 0px; background-color: #fff; box-shadow: 0 2px 5px #d2d1d1,inset 0 -1px 1px #fff;">
+                            <div class="col-md-3 col-sm-3 col-xs-12" style="margin: 0px; padding-top: 10px; padding-right: 0px; min-width: 180px; max-width: 180px;">
+                                <img src="@if (!string.IsNullOrEmpty(item.ProfilePicLink) && item.ProfilePicLink.Length > 0)
+                                          { 
+                                          @Url.Action("GetImage", "Image", new { imageName = item.ProfilePicLink })
+                                          }
+                                          else
+                                          {
+                                          @Url.Action("GetImage", "Image", new { imageName = "~/Content/unknownProfile.png" })
+                                          }" style="width: 100%; height: 160px;" />
+                            </div>
+                            <div class="col-md-9 col-sm-9 col-xs-12" style="margin: 0px; padding: 10px 15px; height: 100%">
+                                @{ var fullName = item != null ? item.FirstName + " " + item.LastName : ""; }
+                                <p><strong>@fullName</strong></p>
+                                @{ var profileDetails = !string.IsNullOrEmpty(item.ProfileDetails) ? item.ProfileDetails.Replace(Environment.NewLine, "<br/>") : "";}
+                                <p style="word-wrap: break-word; color: rgb(0, 0, 0); height: 138px; overflow: hidden;">@Html.Raw(profileDetails)</p>
+                            </div>
+                        </div>
+                    </a>
+                }
+            </div>
+            <div class="row" style="padding: 0px; margin: 0px 0 50px 0;">
+            <div class="col-md-2 col-sm-2 col-xs-12" style="margin-top: 13px; padding: 0px; min-width: 76px;">
+                Showing @from - @to of @total
+            </div>
+            <div class="col-md-10 col-sm-10 col-xs-12" style="padding: 0px; height: 10px; margin: 0px; margin-top: -17px;">
+                @Html.PagedListPager(accountList, page => Url.Action("broker-search", new
+               {
+                   page,
+                   userEntityId = Model.UserEntityId,
+                   propIndicatorId = Model.PropIndicatorId,
+                   searchTerm = Model.SearchTerm,
+                   orderby = Model.OrderMethod
+               }))
+            </div>
+        </div>
+        }
+    </div>
+    <div class="col-md-3" style="position: relative; padding-left: 0px; margin: 8px 0 0 0;">
+        <div style="position: fixed; width: 244px;">
+            <div class="row" style="margin: 0px; padding: 0px 13px; border: 1px solid rgba(76, 68, 68, 0.19); border-bottom: none; background-color: #fff;">
+                <h4 style="color: #fff; background-color: #089de3; padding: 5px 0; text-align: center;">Property @ViewBag.DefaultPropIndName</h4>
+            </div>
+            <ul class="list-group" style="margin: 0 0 10px 0;">
+                @foreach (var type in ViewBag.PropertyId as IEnumerable<SelectListItem>)
+                {
+                    <li class="list-group-item indicator-content" style="padding: 5px 15px; border-radius: 0px;">
+                        @{ var propIndicatorName = ViewBag.DefaultPropIndName as string; }
+                        @Html.ActionLink(@type.Text, type.Text.Replace(' ', '-').ToLower() + "-" + propIndicatorName.Replace(' ', '-').ToLower() + "-in-philippines", "property", new
+                   {
+                       propertyId = type.Value,
+                       propIndicatorId = ViewBag.DeaultPropIndId,
+                   }, null)
+                    </li>
+                }
+            </ul>
+            <div class="row" id="sendMessage2" style="padding: 0px; margin: 0px;">
+                <div class="row" style="margin: 0px; padding: 0px; border: 1px solid #e0e0e0; background-color: #fff;">
+                    <div class="col-xs-12" style="padding: 10px 13px;">
+                        <div class="col-xs-12" style="padding: 6px 1px 0 12px; height: 27px; background-color: #089de3; margin-bottom: 10px; text-align: center;">
+                            <span style="margin: 0px; padding: 0px; color: #fff; text-align: center;">Leave a Message</span>
+                        </div>
+                        @using (Ajax.BeginForm("AddClientMessage", "Home", null, ajaxOption))
+                        {
+                            <div class="col-xs-12" style="margin: 0px; padding: 0px;">
+                                <span style="margin: 0 2px 0 -7px; color: red;">*</span><span><input type="text" name="name" placeholder="Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Name'" style="height: 23px; margin: 0 0 10px 0; padding-top: 1px; border: 1px solid #bdc7d8;" /></span>
+                            </div>
+                            <div class="col-xs-12" style="margin: 0px; padding: 0px;">
+                                <span style="margin: 0 2px 0 -7px; color: red;">*</span><span><input type="text" name="email" placeholder="Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email'" style="height: 23px; margin: 0 0 10px 0; padding-top: 1px; border: 1px solid #bdc7d8;" /></span>
+                            </div>
+                            <div class="col-xs-12" style="margin: 0px; padding: 0px;">
+                                <span style="margin: 0 2px 0 -7px; color: red;">*</span><span><input type="text" name="mobileNo" placeholder="Mobile Number" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Mobile Number'" style="height: 23px; margin: 0 0 10px 0; padding-top: 1px; border: 1px solid #bdc7d8;" /></span>
+                            </div>
+                            <div class="col-xs-12" style="margin: 0px; padding: 0px;">
+                                <span style="margin: 0 2px 0 -7px; color: red;">*</span><span><textarea name="message" placeholder="Type your Message here. ." onfocus="this.placeholder = ''" onblur="this.placeholder = 'Type your Message here. . '" style="min-height: 30px; max-height: 40px; resize: none; width: 100%; padding: 3px 10px; border: 1px solid #bdc7d8;"></textarea></span>
+                            </div>
+                            <div class="col-xs-12" style="margin: 0px; padding: 0px;">
+                                <input class="btn btn-success" type="submit" value="Send Message" style="width: 100%; max-width: 319px; height: 27px; font-size: 11px;" />
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#LocationId").select2({
+            ajax: {
+                url: "/Home/CustomGetLocations",
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        query: params.term, // search term
+                        page: params.page
+                    };
+                },
+                processResults: function (data, params) {
+                    // parse the results into the format expected by Select2
+                    // since we are using custom formatting functions we do not need to
+                    // alter the remote JSON data, except to indicate that infinite
+                    // scrolling can be used
+                    params.page = params.page || 1;
+
+                    // !IMPORTANT! your every item in data.items has to have an .id property - this is the actual value that Select2 uses
+                    // Luckily the source data.items already have one
+                    return {
+                        results: data.items,
+                        pagination: {
+                            more: (params.page * 30) < data.total_count
+                        }
+                    };
+                },
+                cache: true
+            },
+            escapeMarkup: function (markup) {
+                return markup; // let our custom formatter work
+            },
+            minimumInputLength: 1,
+            templateResult: function (repo) {
+                if (repo.loading) return repo.text;
+                return repo.Name;
+            },
+            templateSelection: function (repo) {
+                return repo.Name || repo.text;
+            }
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.modalDetails').fancybox({
+            fitToView: false,
+            width: '800px',
+            height: '630px',
+            autoSize: false,
+            closeClick: false,
+            openEffect: 'none',
+            closeEffect: 'none',
+            padding: 0,
+            closeBtn: false
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    function OnSubmitError(data) {
+        alert(data.statusText);
+    }
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#PropertyId').change(function () {
+            ChangeSearchSegment();
+        });
+
+        $('#PropIndicatorId').change(function () {
+            ChangeSearchSegment();
+        });
+
+        $('#LocationId').change(function () {
+            ChangeSearchSegment();
+        });
+
+        function ChangeSearchSegment() {
+            var segment = "";
+
+            var propType = $("#PropertyId option:selected").text();
+            var propInd = $("#PropIndicatorId option:selected").text();
+            var location = $("#select2-LocationId-container").text();
+
+            if (propType != "Property Type") {
+                segment = segment + propType.replace(/ /g, '-');
+            }
+            else {
+                segment = "property";
+            }
+            if (propInd != "") {
+                segment = segment + "-" + propInd.replace(/ /g, "-");
+            }
+            if (location != "") {
+                segment = segment + "-in-" + location.replace(/ /g, "-");
+            }
+
+            $("#searchForm").attr("action", "/property/" + segment.toLowerCase());
+        };
+    });
+</script>

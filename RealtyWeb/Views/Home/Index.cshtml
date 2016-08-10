@@ -1,0 +1,376 @@
+﻿@using PagedList.Mvc;
+@using RealtyWeb.Models;
+@using RealtyWeb.Common;
+
+@model SearchFilter
+
+@{
+    var context = new RealtyWebContext();
+    var propertyTypes = context.Properties.ToList();
+    var propertyList = ViewBag.PropertyList as List<RealtyWeb.Models.PropertyEntry>;
+    var siteInfo = context.Sites.FirstOrDefault();
+    var about = siteInfo.AboutUs.Replace(Environment.NewLine, "<br/>");
+    var bulletin = siteInfo.Bulletin.Replace(Environment.NewLine, "<br/>");
+    var postcards = context.PostCards.Where(x => x.Status == "A").ToList();
+    var activities = postcards.Where(x => x.Type == "Activity").OrderByDescending(x => x.UpdatedDate).ToList();
+    var recognitions = postcards.Where(x => x.Type == "Recognition").OrderByDescending(x => x.UpdatedDate).ToList();
+
+    var submitMessageOptions = new AjaxOptions()
+    {
+        HttpMethod = "POST",
+        OnSuccess = "javascript:alert(\"A message has been successfully sent to the Broker.\")",
+        OnFailure = "OnSubmitError"
+    };
+}
+
+@{
+    ViewBag.Title = "Property For Sale in Philippines : ALJTHomes";
+    ViewBag.Description = about;
+}
+
+<div class="row filter-container" style="margin: 0px; padding: 0px;">
+    <div class="navbar navbar-inverse navbar-fixed-top filter-content">
+        <div class="body-content container">
+            @using (Html.BeginForm("property-for-sale-in-philippines", "property", FormMethod.Get, new { id = "searchForm", enctype = "multipart/form-data", @style = "width: 100%;margin-left: auto;margin-top: 18px;margin-right: auto;" }))
+            {
+                <div class="row" style="padding: 0px; margin: 0px;">
+                    <div class="col-md-9 col-sm-12 col-xs-12" style="margin: 0px; padding: 0px;">
+                        <div class="row" style="padding: 0px; margin:0px;">
+                            <div class="col-md-4 col-sm-4 col-xs-12 shown-small-screen filter-item">
+                                @Html.DropDownListFor(x => x.PropertyId, null, "Property Type", new { @style = "height: 25px; padding: 0 0 0 12px; width: 100%; font-size: 13px; border: none; border-radius: 0px;" })
+                            </div>
+                            <div class="col-md-2 col-sm-2 col-xs-12 hide-small-screen filter-item">
+                                @Html.DropDownListFor(x => x.MinPrices, null, "Min Price", new { @style = "height: 25px; padding: 0 0 0 12px; width: 100%; font-size: 13px; border: none; border-radius: 0px;" })
+                            </div>
+                            <div class="col-md-2 col-sm-2 col-xs-12 shown-small-screen filter-item" >
+                                @Html.DropDownListFor(x => x.MaxPrices, null, "Max Price", new { @style = "height: 25px; padding: 0 0 0 12px; width: 100%; font-size: 13px; border: none; border-radius: 0px;" })
+                            </div>
+                            <div class="col-md-2 col-sm-2 col-xs-12 hide-small-screen filter-item">
+                                @Html.DropDownListFor(x => x.Beds, null, "Bedrooms", new { @style = "height: 25px; padding: 0 0 0 12px; width: 100%; font-size: 13px; border: none; border-radius: 0px;" })
+                            </div>
+                            <div class="col-md-2 col-sm-2 col-xs-12 hide-small-screen filter-item filter-rightpad-remove">
+                                @Html.DropDownListFor(x => x.Baths, null, "Bathrooms", new { @style = "height: 25px; padding: 0 0 0 12px; width: 100%; font-size: 13px; border: none; border-radius: 0px;" })
+                            </div>
+                        </div>
+                        <div class="row" style="margin:0px;">
+                            <div class="col-md-4 col-sm-4 col-xs-12 shown-small-screen filter-item">
+                                @Html.DropDownListFor(x => x.PropIndicatorId, null, new { @style = "height: 34px; padding: 0 0 0 12px; width: 100%; margin-right: 6px; border: none; border-radius: 0px;" })
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-12 shown-small-screen filter-item">
+                                @Html.AutocompleteFor(x => x.SearchTerm, x => x.LocationId, "GetLocations", "PropertyEntry", false, new { htmlAttributes = new { @style = "width:100%; max-width:1000px; margin-right: 6px; border: none; border-radius: 0px;", @placeholder = "Search for a City, Suburb or Web Ref . . .", @onfocus = "this.placeholder = ''", @onblur = "this.placeholder = 'Search for a City, Suburb or Web Ref . . .'" } })
+                            </div>
+                            <div class="col-md-2 col-sm-2 col-xs-12 shown-small-screen filter-item filter-rightpad-remove">
+                                <button id="btnFind" type="submit" class="btn btn-success" style="width: 100%; font-weight: bold; height: 34px; border: none; border-radius: 0px; font-size: 16px;">Find</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-12 col-xs-12 hide-small-screen" style="margin: 0px; padding: 0px;">
+                        <div class="row" style="margin: 0 0 10px 0; padding: 0px;">
+                            <div class="col-md-12 col-sm-12 col-xs-12" style="padding: 0px; float: left; position: relative">
+                                <h2 style="color: #fff; margin: -3px 0 10px 0">Find Property In</h2>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12 location-filter" style="padding: 0px; margin-top: 0px; font-size: 15px;">
+                                <select id="LocationId" name="LocationId" class="js-data-example-ajax" style="width: 100%; border: none; border-radius: 0px;">
+                                    <option value="" selected="selected">Philippines</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<div class="row content-container">
+
+    @{int mod = propertyList.Count() / 3;}
+    @if (mod > 0)
+    {
+        <div class="row" style="margin: 25px 0 0 16px; padding: 0px;">
+            <div style="float: left; margin-right: 10px;">
+                <h3>Latest Properties For Sale in <strong style="color: #428bca;">Philippines . .</strong></h3>
+            </div>
+        </div>
+        <div id="carousel-example-generic" data-pause="hover" data-interval="5000" class="carousel slide" data-ride="carousel" style="max-width : 720px; margin-left: auto; margin-right: auto;">
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner">
+                @for (var i = 0; i <= (mod - 1); i++)
+                {
+                    var classAttr = i == 0 ? "item active" : "item";
+                    <div class="@classAttr">
+                        @if (propertyList.Count() >= ((i + 1) * 3))
+                        {
+                            for (var x = (i * 3); x < ((i + 1) * 3); x++)
+                            {
+                                <div id="carouselItem" class="col-md-4 col-sm-6 col-xs-12  carouselPanel" style="margin: 0px; padding: 5px;">
+                                    <a href="/@propertyList[x].GenerateTitleForURL()" title="" class="title modalDetails" onclick="" style="text-decoration:none;">
+                                        <div class="pull-left" style="margin-bottom: 7px; width: 100%">
+                                            <img style="width: 100%" class="pull-left" height="198" src="
+                                                            @if (propertyList[x].ImageGallery.Count() > 0)
+                                                            {
+                                                                @Url.Action("GetImage", "Image", new { imageName = propertyList[x].ImageGallery.FirstOrDefault().ImagePath })
+                                                            }">
+                                        </div>
+                                        @{ var bedroomStr = (propertyList[x].Bedrooms > 0) ? propertyList[x].Bedrooms + " bedroom " : string.Empty;
+                                           var type = propertyList[x].Property.PropertyName + " ";
+                                           var indicator = propertyList[x].PropertyIndicator.PropIndicatorName + " in ";
+                                           var address2 = (!string.IsNullOrEmpty(propertyList[x].Address2)) ? propertyList[x].Address2 + ", " : string.Empty;
+                                           var address3 = (!string.IsNullOrEmpty(propertyList[x].Address3)) ? propertyList[x].Address3 : string.Empty;
+                                           var details = bedroomStr + type + indicator + address2 + address3;
+                                        }
+                                        <p>
+                                            @details
+                                        </p>
+                                        <h4>₱ @propertyList[x].Price.ToString("0,0")
+                                        </h4>
+
+                                    </a>
+                                </div>
+                            }
+                        }
+                    </div>
+                }
+            </div>
+
+            <!-- Controls -->
+            <div style="width: 100%; height: 50px;">
+                <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev" style="background-image: none; top:auto; bottom: auto; text-align:right; width: 45%; font-size: 36px;">
+                    <span class="glyphicon glyphicon-circle-arrow-left" style="color: #444;"></span>
+                </a>
+                <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next" style="background-image: none; top:auto; bottom: auto; text-align:left; width: 45%; font-size: 36px;">
+                    <span class="glyphicon glyphicon-circle-arrow-right" style="color: #444;"></span>
+                </a>
+            </div>
+            <div style="width: 100%; margin-left: auto; margin-right: auto; margin-top: 3px; margin-bottom: 35px; padding: 0 5px;">
+                @Html.ActionLink("Show more Properties", "property-for-sale-in-philippines", "property", null, new { @class = "btn btn-success", @style = "width:100%" })
+            </div>
+        </div>
+    }
+
+    <div class="row" style="margin:0px; padding:0px;">
+        <div class="col-md-9" style="margin: 0 0 30px 0; padding: 0 15px 0 15px;">
+            <div class="row" style="background-color: #fff; margin: 0px; padding: 0 0 8px 0; border: 1px solid #d2d1d1; box-shadow: 0 2px 5px #d2d1d1, inset 0 -1px 1px #fff; margin-bottom: 15px;">
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <h4 style="color: #90949c; background-color: #ECECEC; border-bottom: 2px solid #EA530E; padding: 5px 0;">Recognitions</h4>
+                    <div style="margin: 0px; padding: 0px; height: 220px; width: 100%">
+                        <div data-pause="hover" data-interval="3000" class="carousel slide" data-ride="carousel" style="width: 100%;">
+                            <!-- Wrapper for slides -->
+                            <div class="carousel-inner" style="width: 100%">
+                                @for (var i = 0; i < recognitions.Count(); i++)
+                                {
+                                    var classAttr = i == 0 ? "item active" : "item";
+                                    <div class="@classAttr">
+                                        <div class="carouselPanel" style="margin: 0px; padding: 0px; width: 100%;">
+                                            <div class="pull-left" style="width: 100%;">
+                                                <img style="width: 100%; height: 216px;" src="@Url.Action("GetImage", "Image", new { imageName = recognitions[i].ImagePath })">
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <h4 style="color: #90949c; background-color: #ECECEC; border-bottom: 2px solid #EA530E; padding: 5px 0;">Bulletin</h4>
+                    <div style="height: 207px; overflow: auto;">
+                        @Html.Raw(bulletin)
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="height: 281px; background-color: #fff; margin: 0px; padding: 0 0 13px 0; border: 1px solid #d2d1d1; box-shadow: 0 2px 5px #d2d1d1, inset 0 -1px 1px #fff;">
+                <h4 style="margin-left: 15px; margin-right: 15px; color: #90949c; background-color: #ECECEC; border-bottom: 2px solid #EA530E; padding: 5px 0;">Activities</h4>
+                <div class="row" style="padding: 0px; margin: 0 15px 0 0; overflow: auto; height: 228px;">
+                    @foreach (var item in activities)
+                    {
+                        <div class="row" style="margin: 0px; padding: 0px;">
+                            <div class="col-md-6 col-sm-6 col-xs-12" style="margin: 0px; padding-right: 0px; padding-bottom: 12px;">
+                                <img style="width: 100%; height: 216px;" src="@Url.Action("GetImage", "Image", new { imageName = item.ImagePath })">
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-12" style="margin: 0px; padding-left: 30px; padding-bottom: 12px;">
+                                <p><strong>@item.Title</strong></p>
+                                <p>@item.Description</p>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3" style="margin: 0 0 30px 0; padding: 0 15px 0 0;">
+        <div>
+            <div class="row" style="margin: 0; padding: 0px 13px; background-color: #fff; border: 1px solid #e0e0e0; border-bottom: none;">
+                <h4 style="color: #fff; background-color: #089de3; padding: 5px 0; text-align: center;">Property For Sale</h4>
+            </div>
+            <ul class="list-group" style="margin-bottom: 17px;">
+                @foreach (var type in propertyTypes)
+                {
+                    <li class="list-group-item indicator-content" style="border-radius: 0px;">
+                        @Html.ActionLink(type.PropertyName, type.PropertyName.Replace(' ', '-').ToLower() + "-for-sale-in-philippines", "property", new
+                                                      {
+                                                          propertyId = type.PropertyId,
+                                                          propIndicatorId = 1
+                                                      }, null)
+                    </li>
+                }
+            </ul>
+            <div class="row" id="sendMessage2" style="padding: 0px; margin: 0px;">
+                <div class="row" style="margin: 0px; padding: 0px; border: 1px solid #e0e0e0; background-color: #fff;">
+                    <div class="col-xs-12" style="padding: 10px 13px;">
+                        <div class="col-xs-12" style="padding: 6px 1px 0 12px; height: 27px; background-color: #089de3; margin-bottom: 10px; text-align: center;">
+                            <span style="margin: 0px; padding: 0px; color: #fff; text-align: center;">Leave a Message</span>
+                        </div>
+
+                        @using (Ajax.BeginForm("AddClientMessage", submitMessageOptions))
+                        {
+                            <div class="col-xs-12" style="margin: 0px; padding: 0px;">
+                                <span style="margin: 0 2px 0 -7px; color: red;">*</span><span><input type="text" name="name" placeholder="Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Name'" style="height: 27px; margin: 0 0 10px 0; padding-top: 2px; border: 1px solid #bdc7d8;" /></span>
+                            </div>
+                            <div class="col-xs-12" style="margin: 0px; padding: 0px;">
+                                <span style="margin: 0 2px 0 -7px; color: red;">*</span><span><input type="text" name="email" placeholder="Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email'" style="height: 27px; margin: 0 0 10px 0; padding-top: 2px; border: 1px solid #bdc7d8;" /></span>
+                            </div>
+                            <div class="col-xs-12" style="margin: 0px; padding: 0px;">
+                                <span style="margin: 0 2px 0 -7px; color: red;">*</span><span><input type="text" name="mobileNo" placeholder="Mobile Number" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Mobile Number'" style="height: 27px; margin: 0 0 10px 0; padding-top: 2px; border: 1px solid #bdc7d8;" /></span>
+                            </div>
+                            <div class="col-xs-12" style="margin: 0px; padding: 0px;">
+                                <span style="margin: 0 2px 0 -7px; color: red;">*</span><span><textarea name="message" placeholder="Type your Message here. ." onfocus="this.placeholder = ''" onblur="this.placeholder = 'Type your Message here. . '" style="min-height: 66px; max-height: 66px; resize: none; width: 100%; padding: 3px 10px; border: 1px solid #bdc7d8;"></textarea></span>
+                            </div>
+                            <div class="col-xs-12" style="margin: 0px; padding: 0px;">
+                                <input class="btn btn-success" type="submit" value="Send Message" style="width: 100%; height: 27px; font-size: 11px;" />
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="row" style="margin: 0px 0 13px 0; padding: 0px;">
+        <div class="col-md-6">
+            <h2>About Us</h2>
+            <div style="height: 100px; overflow: hidden; margin-bottom:5px;">
+                @Html.Raw(about);
+            </div>
+            <p><a class="btn btn-primary" href="~/Home/About">Read more &raquo;</a></p>
+        </div>
+        <div class="col-md-6">
+            <h2>Contact Us</h2>
+            <div class="row" style="margin: 20px 0 0 0; padding: 0px;">
+                <div class="col-xs-12" style="margin: 0px; padding: 0px;">
+                    <div style="color: #25769f; font-size: 15px;">&#9742 Contact No:</div>
+                    <span style="margin-top: 6px;">09227991010</span>
+                </div>
+                <div class="col-xs-12" style="margin: 0px; padding: 0px;">
+                    <div style="color: #25769f; font-size: 15px;">&#9993 Email Address:</div>
+                    <div style="margin-top: 6px;">aljtrealtybrokerage@gmail.com</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#LocationId").select2({
+            ajax: {
+                url: "/Home/CustomGetLocations",
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        query: params.term, // search term
+                        page: params.page
+                    };
+                },
+                processResults: function (data, params) {
+                    // parse the results into the format expected by Select2
+                    // since we are using custom formatting functions we do not need to
+                    // alter the remote JSON data, except to indicate that infinite
+                    // scrolling can be used
+                    params.page = params.page || 1;
+
+                    // !IMPORTANT! your every item in data.items has to have an .id property - this is the actual value that Select2 uses
+                    // Luckily the source data.items already have one
+                    return {
+                        results: data.items,
+                        pagination: {
+                            more: (params.page * 30) < data.total_count
+                        }
+                    };
+                },
+                cache: true
+            },
+            escapeMarkup: function (markup) {
+                return markup; // let our custom formatter work
+            },
+            minimumInputLength: 1,
+            templateResult: function (repo) {
+                if (repo.loading) return repo.text;
+                return repo.Name;
+            },
+            templateSelection: function (repo) {
+                return repo.Name || repo.text;
+            }
+        });
+
+        //disable right-click
+        //$('.carouselPanel').on("contextmenu", function (e) {
+        //    return false;
+        //});
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.modalDetails').fancybox({
+            fitToView: false,
+            width: '800px',
+            height: '630px',
+            autoSize: false,
+            closeClick: false,
+            openEffect: 'none',
+            closeEffect: 'none',
+            padding: 0,
+            closeBtn: false
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#PropertyId').change(function () {
+            ChangeSearchSegment();
+        });
+
+        $('#PropIndicatorId').change(function () {
+            ChangeSearchSegment();
+        });
+
+        $('#LocationId').change(function () {
+            ChangeSearchSegment();
+        });
+
+        function ChangeSearchSegment() {
+            var segment = "";
+
+            var propType = $("#PropertyId option:selected").text();
+            var propInd = $("#PropIndicatorId option:selected").text();
+            var location = $("#select2-LocationId-container").text();
+
+            if (propType != "Property Type") {
+                segment = segment + propType.replace(/ /g, '-');
+            }
+            else {
+                segment = "property";
+            }
+            if (propInd != "") {
+                segment = segment + "-" + propInd.replace(/ /g, "-");
+            }
+            if (location != "") {
+                segment = segment + "-in-" + location.replace(/ /g, "-");
+            }
+
+            $("#searchForm").attr("action", "/property/" + segment.toLowerCase());
+        };
+    });
+</script>

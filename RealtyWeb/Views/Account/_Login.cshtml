@@ -1,0 +1,42 @@
+﻿@model RealtyWeb.Models.LoginViewModel
+
+<div class="row" style="margin: 0px; padding: 0px; background-color: #fff; box-shadow: 0 2px 5px #d2d1d1,inset 0 -1px 1px #fff; min-height:268px;">
+    <h3 style="background-color: #089de3; color: white; margin: 0 0 29px 0; padding: 5px 10px;">Sign In</h3>
+    <div class="row" style="margin: 0px; padding: 0 10px;">
+        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <div class="col-md-6 col-sm-6 col-xs-12" style="padding:0px;">
+                        @Html.CheckBoxFor(m => m.RememberMe)
+                        @Html.LabelFor(m => m.RememberMe)
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12" style="padding-right:0px;">
+                        @Html.ActionLink("Forgot your password?", "ForgotPassword")
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Log in" class="btn btn-primary" />
+                </div>
+            </div>
+        }
+    </div>
+</div>

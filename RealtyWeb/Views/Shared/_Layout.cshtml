@@ -1,0 +1,188 @@
+﻿@using RealtyWeb.Models;
+@using Microsoft.AspNet.Identity;
+@using RealtyWeb.Common;
+
+@{ 
+    var context = new RealtyWebContext();
+    var propertyTypes = context.Properties.ToList();
+    var clientMessage = new RealtyWeb.Models.ClientMessage();
+    var isAuthenticated = Request.IsAuthenticated;
+
+    Menu selectedMenu = Menu.None;
+    
+    if(ViewBag.CurrentMenu != null)
+    {
+        selectedMenu = ViewBag.CurrentMenu;
+    }
+
+    var menuClass = "";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:url" content="@ViewBag.URL" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="@ViewBag.Title" />
+    <meta property="og:description" content="@ViewBag.Description" />
+    <meta property="og:image" content="@ViewBag.Image"/>
+
+    <title>@ViewBag.Title</title>
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/scripts")
+
+    <link rel="icon" type="image/x-icon" href="~/Content/Icon.png">
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top" style="z-index: 1000;">
+        <div class="container">
+            <div class="navbar-header">
+                <a style="padding-left: 15px; margin: 0px; float: left;" href="~/">
+                    <img style="width: 223px; height: 54px;" src="@Url.Action("GetImage", "Image", new { imageName = "~/Content/logo2.png" })" />
+                </a>
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home", null, new { @class = @selectedMenu == Menu.Home ? "menuSelected" : "" })</li>
+                    <li>@Html.ActionLink("About", "About", "Home", null, new { @class = @selectedMenu == Menu.About ? "menuSelected" : "" })</li>
+                    <li>
+                        <div class="dropdown">
+                            @{ menuClass = @selectedMenu == Menu.ForSale ? "menuSelected" : ""; }
+                            @using (Html.BeginForm("property-for-sale-in-philippines", "property", new { propIndicatorId = 1 }))
+                            {
+                                <button type="submit" class="dropbtn @menuClass">For Sale</button>
+                            }
+                            <div class="dropdown-content">
+                                @if (propertyTypes != null && propertyTypes.Count() > 0)
+                                {
+                                    foreach (var item in propertyTypes)
+                                    {
+                                    @Html.ActionLink(item.PropertyName, item.PropertyName.Replace(' ', '-').ToLower() + "-for-sale-in-philippines", "property", new
+                                       {
+                                           propertyId = item.PropertyId,
+                                           propIndicatorId = 1
+                                       }, null);
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="dropdown">
+                            @{ menuClass = @selectedMenu == Menu.ForRent ? "menuSelected" : ""; }
+                            @using (Html.BeginForm("property-for-rent-in-philippines", "property", new { propIndicatorId = 2 }))
+                            {
+                                <button type="submit" class="dropbtn @menuClass">For Rent</button>
+                            }
+                            <div class="dropdown-content">
+                                @if (propertyTypes != null && propertyTypes.Count() > 0)
+                                {
+                                    foreach (var item in propertyTypes)
+                                    {
+                                    @Html.ActionLink(item.PropertyName, item.PropertyName.Replace(' ', '-').ToLower() + "-for-rent-in-philippines", "property", new
+                               {
+                                   propertyId = item.PropertyId,
+                                   propIndicatorId = 2
+                               }, null);
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="dropdown">
+                            @{ menuClass = @selectedMenu == Menu.Foreclosed ? "menuSelected" : ""; }
+                            @using (Html.BeginForm("property-foreclosed-in-philippines", "property", new { propIndicatorId = 4 }))
+                            {
+                                <button type="submit" class="dropbtn @menuClass">Foreclosed</button>
+                            }
+                            <div class="dropdown-content">
+                                @if (propertyTypes != null && propertyTypes.Count() > 0)
+                                {
+                                    foreach (var item in propertyTypes)
+                                    {
+                                    @Html.ActionLink(item.PropertyName, item.PropertyName.Replace(' ', '-').ToLower() + "-foreclosed-in-philippines", "property", new
+                               {
+                                   propertyId = item.PropertyId,
+                                   propIndicatorId = 4
+                               }, null);
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </li>
+                    <li>@Html.ActionLink("Developments", "property-development-in-philippines", "property", new { propIndicatorId = 3 }, new { @class = @selectedMenu == Menu.Development ? "menuSelected" : "" })
+                        @*<div class="dropdown">
+                            @{ menuClass = @selectedMenu == Menu.Development ? "menuSelected" : ""; }
+                            @using (Html.BeginForm("property-development-in-philippines", "property", new { propIndicatorId = 3 }))
+                            {
+                                <button type="submit" class="dropbtn @menuClass">Developments</button>
+                            }
+                            <div class="dropdown-content">
+                                @if (propertyTypes != null && propertyTypes.Count() > 0)
+                                {
+                                    foreach (var item in propertyTypes)
+                                    {
+                                    @Html.ActionLink(item.PropertyName, item.PropertyName.Replace(' ', '-').ToLower() + "-development-in-philippines", "property", new
+                               {
+                                   propertyId = item.PropertyId,
+                                   propIndicatorId = 3
+                               }, null);
+                                    }
+                                }
+                            </div>
+                        </div>*@
+                    </li>
+                    <li>
+                        <div class="dropdown">
+                            @{ menuClass = @selectedMenu == Menu.Realty ? "menuSelected" : ""; }
+                            @using (Html.BeginForm("broker-search", "profile", null))
+                            {
+                                <button type="submit" class="dropbtn @menuClass">Realty</button>
+                            }
+
+                            <div class="dropdown-content">
+                                <a href="@Url.Action("broker-search", "Profile", new { userEntityId =  2 })">Brokers</a>
+                                <a href="@Url.Action("broker-search", "Profile", new { userEntityId =  3 })">Agents</a>
+                                <a href="@Url.Action("broker-search", "Profile", new { userEntityId =  4 })">Agencies</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        @*<hr />*@
+        <footer>
+            <p class="text-danger" style="margin-left: auto; margin-right: auto; max-width: 357px;">
+                Copyright © @DateTime.Now.Year - ALJT Realty & Brokerage - All rights reserved.
+            </p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/typeahead")
+    @RenderSection("scripts", required: false)
+    <script type="text/javascript">
+        function OnSubmitError(data) {
+            alert(data.statusText);
+        }
+
+        var isAuthenticated = "@isAuthenticated";
+
+    </script>
+</body>
+</html>

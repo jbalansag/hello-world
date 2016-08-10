@@ -1,0 +1,126 @@
+﻿@using PagedList.Mvc;
+@using RealtyWeb.Models;
+
+@model RealtyWeb.Controllers.MessageFilter
+@{
+    ViewBag.Title = "Client Inquiry";
+    
+    var messageList = ViewBag.Messages as PagedList.IPagedList;
+
+    AjaxOptions submitOptions = new AjaxOptions()
+    {
+        HttpMethod = "POST",
+        OnSuccess = "javascript:alert(\"Successfully Updated!\")",
+        OnFailure = "OnSubmitError"
+    };
+}
+
+@Styles.Render("~/Content/inquiries")
+
+<div class="row maintenance" style="margin: 0px; padding: 20px 0px;">
+    <div class="tab-content" style="border-radius: 9px; border: 1px solid #a6a5a5; padding: 33px; box-shadow: 0 2px 5px #d2d1d1, inset 0 -1px 1px #fff">
+        <div class="col-md-12" id="activityArea" style="margin:0px; padding: 0px;">
+            <div class="row" style="margin: 0 0 10px 0; padding: 0px;">
+                <div class="col-md-1" style="margin: 10px 0 0 0; padding: 0px;">
+                    <span>Page @(messageList.PageCount < messageList.PageNumber ? 0 : messageList.PageNumber) of @messageList.PageCount</span>
+                </div>
+                <div class="col-md-5" style="padding: 0px; height: 10px; margin: 0px; margin-top: -19px;">
+                    @Html.PagedListPager((ViewBag.Messages as PagedList.IPagedList), page => Url.Action("Index", new { page, fromDate = Model.FromDate, toDate = Model.ToDate }))
+                </div>
+
+                @using (Html.BeginForm("Index", "Inquiry", FormMethod.Get, new { enctype = "multipart/form-data" }))
+                {
+                    <div class="col-md-2" style="float: right; margin-right: -64px;">
+                        <input type="submit" value="Reload" class="btn btn-success" style="height: 31px; padding-top: 5px;"/>
+                    </div>
+                    <div class="col-md-3" style="float: right; margin-right: -29px;">
+                        <div class="form-group">
+                            <label class="col-md-2" style="margin: 0px; padding: 9px 0 0 17px;">To:</label>
+                            <div class='datetimepicker input-group date col-md-10' id='toDate' style="padding-left: 8px;">
+                                @Html.TextBoxFor(x => x.ToDate, new { @type = "text", @class = "form-control", @style="height: 31px" })
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3" style="float: right; margin-right: -40px;">
+                        <div class="form-group">
+                            <label class="col-md-2" style="margin: 0px; padding: 9px 0 0 0;">From:</label>
+                            <div class='datetimepicker input-group date col-md-10' id='fromDate' style="padding-left: 8px;">
+                                @Html.TextBoxFor(x => x.FromDate, new { @type = "text", @class = "form-control", @style="height: 31px" })
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="row" style="overflow-y: auto; margin: 0px; padding: 0px;">
+                <table class="table table-hover" style="margin-bottom: 0px; border: 1px solid #ccc;">
+                    <thead style="background-color: #089de3; color: white;">
+                        <tr style="border: 1px solid #089de3;">
+                            <th style="min-width: 79px;">Received</th>
+                            <th style="min-width: 100px;">Client Name</th>
+                            <th style="min-width: 100px;">Email</th>
+                            <th style="min-width: 100px;">Contact No.</th>
+                            <th style="min-width: 100px;">Message</th>
+                            <th style="min-width: 58px;">Ref. No</th>
+                            <th style="min-width: 100px;">Property Address</th>
+                            <th style="min-width: 100px;">Broker/Agent</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (messageList != null && messageList.TotalItemCount > 0)
+                        {
+                            foreach (var item in ViewBag.Messages as IEnumerable<RealtyWeb.Controllers.Message>)
+                            {
+                            <tr>
+                                <td>
+                                    @item.DateSubmitted
+                                </td>
+                                <td>
+                                    @item.Name
+                                </td>
+                                <td>
+                                    @item.Email
+                                </td>
+                                <td>
+                                    @item.ContactNo
+                                </td>
+                                <td>
+                                    @item.Messages
+                                </td>
+                                <td>
+                                    @item.PropertyEntryId
+                                </td>
+                                <td>
+                                    @item.PropertyAddress
+                                </td>
+                                <td>
+                                    @item.BrokerAgent
+                                </td>
+                            </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Scripts.Render("~/bundles/inquiries")
+
+<script type="text/javascript">
+    function OnSubmitError(data) {
+        alert(data.statusText);
+    }
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        $('.datetimepicker').datetimepicker();
+    });
+</script>

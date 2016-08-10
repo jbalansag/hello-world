@@ -1,0 +1,75 @@
+﻿
+@{
+    var ajaxOption = new AjaxOptions()
+        {
+            HttpMethod = "POST",
+            OnSuccess = "OnSuccessSubscription",
+            OnFailure = "OnSubmitError"
+        };
+}
+
+<style>
+     .modal-content {
+         max-width: 500px !important;
+         margin: 30px auto !important;
+         border-radius: 0px;
+     }
+ </style>
+
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header" style="padding: 15px 30px; background-color: #089de3; color: #fff;">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Subscription Required (<strong style="color:#FFEB3B">FREE</strong>)</h4>
+        </div>
+        <div class="modal-body" style="padding:20px 20px 30px 20px;">
+            @using (Ajax.BeginForm("AddSubscription", ajaxOption))
+            {
+                <div class="row form-group" style="padding:17px 10px; margin:10px; background-color:rgba(233, 234, 237, 0.62)">
+                    <div class="col-xs-12">
+                        <label>Enter your email address:</label>
+                    </div>
+                    <div class="col-xs-12">
+                        <input type="text" name="email" style="padding:10px; width: 100%; max-width: 388px; border: solid 1px rgba(128, 128, 128, 0.4); height: 30px;" />
+                    </div>
+                    <br />
+                    <div class="col-xs-12">
+                        <label>Enter your mobile no:</label>
+                    </div>
+                    <div class="col-xs-12">
+                        <input type="text" name="mobileNo" style="padding:10px; width: 100%; max-width: 388px; border: solid 1px rgba(128, 128, 128, 0.4); height: 30px;" />
+                    </div>
+                    <br />
+                    <div class="col-xs-12">
+                        <input class="col-xs-1" style="margin-left: -8px;" type="checkbox" name="receiveAlerts" id="receiveAlerts_id" value="true">
+                        <label class="col-xs-11" style="padding:2px 0 0 0; font-weight:normal;" for="receiveAlerts_id">Yes, I wish to receive occasional emails about special offers, new listings and exclusive promotions. I can cancel my subscription at any time.</label>
+                        <br /><br /><br /><br /><br />
+                        <p class="col-xs-12" style="padding:0px; font-weight:normal;"><strong style="color:rgb(255, 0, 0);">Disclaimer:</strong> Your data will not be shared with others and you can unsubscribe at any time.</p>
+                    </div>
+                </div>
+                <hr style="margin: 23px 0px;border: none;"/>
+                <div class="row" style="margin:10px; padding:0px;">
+                    <button type="submit" id="subscribe-btn" class="btn btn-success" style="width: 100%;">Subscribe</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    //$(function () {
+    //    $('#subscribe-btn').click(function () {
+    //        $.cookie("subscribed", "Yes", { expires: 7 });
+    //        $('#subscriptionModal').modal('hide');
+    //    });
+    //});
+
+    function OnSuccessSubscription() {
+        $.cookie("subscribed", "Yes", { expires: 30 });
+        $('#subscriptionModal').modal('hide');
+    }
+
+    function OnSubmitError(data) {
+        alert(data.statusText);
+    }
+</script>

@@ -1,0 +1,93 @@
+﻿@model RealtyWeb.Models.AppUser
+@{
+    var options = new AjaxOptions()
+    {
+
+    };
+    ViewBag.Title = "Manage";
+}
+
+<div class="row" style="margin: 10px 0 0 0;">
+    <div class="col-md-9" style="margin: 0px; padding: 0px;">
+        <h4>EDIT PROFILE</h4>
+    </div>
+    @if ((TempData["EditSuccessful"] as bool?) == false)
+    {
+        <div class="col-md-6" style="margin: 0; color: red; padding: 0px;">
+            <h4>Error encountered while saving data!</h4>
+        </div>
+    }
+    else if ((TempData["EditSuccessful"] as bool?) == true)
+    {
+        <div class="col-md-3" style="margin: 0; color: orange; padding: 0px;">
+            <h4>Successfully Updated!</h4>
+        </div>
+    }
+</div>
+
+<hr style="margin: 0 0 15px 0; border-top: 1px solid rgb(153, 153, 153);" />
+
+<div class="row" style="margin: 0px; padding: 0px;">
+    @using (Html.BeginForm("EditProfile", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="col-md-12" style="margin: 0px; padding: 0px;">
+            @Html.HiddenFor(x => x.Id)
+            @Html.HiddenFor(x => x.EmailConfirmed)
+            @Html.HiddenFor(x => x.PasswordHash)
+            @Html.HiddenFor(x => x.SecurityStamp)
+            @Html.HiddenFor(x => x.PhoneNumberConfirmed)
+            @Html.HiddenFor(x => x.TwoFactorEnabled)
+            @Html.HiddenFor(x => x.LockoutEndDateUtc)
+            @Html.HiddenFor(x => x.LockoutEnabled)
+            @Html.HiddenFor(x => x.AccessFailedCount)
+            @Html.HiddenFor(x => x.AccessFailedCount)
+            @Html.HiddenFor(x => x.UserName)
+            @Html.HiddenFor(x => x.ProfilePicLink)
+            @Html.HiddenFor(x => x.ProfileDetails)
+            @Html.HiddenFor(x => x.LicenseNo)
+
+            @Html.AntiForgeryToken()
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true)
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.FirstName, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.FirstName, new { @style = "width: 200px; padding-left: 7px;", @class = "formTextBox" })
+                        @Html.ValidationMessageFor(model => model.FirstName)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.LastName, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.LastName, new { @style = "width: 200px; padding-left: 7px;", @class = "formTextBox" })
+                        @Html.ValidationMessageFor(model => model.LastName)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Email, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.Email, new { @style = "width: 200px; padding-left: 7px;", @class = "formTextBox", @readonly = "" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PhoneNumber, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10 ">
+                        @Html.TextBoxFor(model => model.PhoneNumber, new { @style = "width: 200px; padding-left: 7px;", @class = "formTextBox" })
+                        @Html.ValidationMessageFor(model => model.PhoneNumber)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-9">
+                        <input type="submit" value="Submit" class="btn btn-success" />
+                        <a class="btn btn-danger" href="@Url.Action("Index", "Home")">Cancel</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

@@ -1,0 +1,1390 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="RealtyWeb.Models.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="RealtyWebModelsStoreContainer">
+          <EntitySet Name="AppUser" EntityType="RealtyWeb.Models.Store.AppUser" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Bas_Barangay" EntityType="RealtyWeb.Models.Store.Bas_Barangay" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Bas_CityMunicipality" EntityType="RealtyWeb.Models.Store.Bas_CityMunicipality" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Bas_Constant" EntityType="RealtyWeb.Models.Store.Bas_Constant" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Bas_Location" EntityType="RealtyWeb.Models.Store.Bas_Location" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Bas_LocationPath" EntityType="RealtyWeb.Models.Store.Bas_LocationPath" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Bas_PointOfInterestType" EntityType="RealtyWeb.Models.Store.Bas_PointOfInterestType" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Bas_Property" EntityType="RealtyWeb.Models.Store.Bas_Property" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Bas_PropertyIndicator" EntityType="RealtyWeb.Models.Store.Bas_PropertyIndicator" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Bas_Province" EntityType="RealtyWeb.Models.Store.Bas_Province" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="PostCard" EntityType="RealtyWeb.Models.Store.PostCard" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Site" EntityType="RealtyWeb.Models.Store.Site" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Trn_ClientInquiry" EntityType="RealtyWeb.Models.Store.Trn_ClientInquiry" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Trn_ClientMessage" EntityType="RealtyWeb.Models.Store.Trn_ClientMessage" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Trn_ImageGallery" EntityType="RealtyWeb.Models.Store.Trn_ImageGallery" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Trn_PointOfInterest" EntityType="RealtyWeb.Models.Store.Trn_PointOfInterest" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Trn_PropertyEntry" EntityType="RealtyWeb.Models.Store.Trn_PropertyEntry" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Trn_Subscription" EntityType="RealtyWeb.Models.Store.Trn_Subscription" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Trn_UserFavorite" EntityType="RealtyWeb.Models.Store.Trn_UserFavorite" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="UserClaim" EntityType="RealtyWeb.Models.Store.UserClaim" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="UserLogin" EntityType="RealtyWeb.Models.Store.UserLogin" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="UserRole" EntityType="RealtyWeb.Models.Store.UserRole" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="UserUserRole" EntityType="RealtyWeb.Models.Store.UserUserRole" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_dbo_UserClaim_dbo_AppUser_UserId" Association="RealtyWeb.Models.Store.FK_dbo_UserClaim_dbo_AppUser_UserId">
+            <End Role="AppUser" EntitySet="AppUser" />
+            <End Role="UserClaim" EntitySet="UserClaim" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_UserLogin_dbo_AppUsers_UserId" Association="RealtyWeb.Models.Store.FK_dbo_UserLogin_dbo_AppUsers_UserId">
+            <End Role="AppUser" EntitySet="AppUser" />
+            <End Role="UserLogin" EntitySet="UserLogin" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_UserRole_dbo_AppUser_UserId" Association="RealtyWeb.Models.Store.FK_dbo_UserRole_dbo_AppUser_UserId">
+            <End Role="AppUser" EntitySet="AppUser" />
+            <End Role="UserUserRole" EntitySet="UserUserRole" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_UserRole_dbo_Role_RoleId" Association="RealtyWeb.Models.Store.FK_dbo_UserRole_dbo_Role_RoleId">
+            <End Role="UserRole" EntitySet="UserRole" />
+            <End Role="UserUserRole" EntitySet="UserUserRole" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Trn_ClientInquiry_Trn_PropertyEntry" Association="RealtyWeb.Models.Store.FK_Trn_ClientInquiry_Trn_PropertyEntry">
+            <End Role="Trn_PropertyEntry" EntitySet="Trn_PropertyEntry" />
+            <End Role="Trn_ClientInquiry" EntitySet="Trn_ClientInquiry" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Trn_ImageGallery_Trn_PropertyEntry" Association="RealtyWeb.Models.Store.FK_Trn_ImageGallery_Trn_PropertyEntry">
+            <End Role="Trn_PropertyEntry" EntitySet="Trn_PropertyEntry" />
+            <End Role="Trn_ImageGallery" EntitySet="Trn_ImageGallery" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Trn_PointOfInterest_Bas_PointOfInterestType" Association="RealtyWeb.Models.Store.FK_Trn_PointOfInterest_Bas_PointOfInterestType">
+            <End Role="Bas_PointOfInterestType" EntitySet="Bas_PointOfInterestType" />
+            <End Role="Trn_PointOfInterest" EntitySet="Trn_PointOfInterest" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Trn_PointOfInterest_Trn_PropertyEntry" Association="RealtyWeb.Models.Store.FK_Trn_PointOfInterest_Trn_PropertyEntry">
+            <End Role="Trn_PropertyEntry" EntitySet="Trn_PropertyEntry" />
+            <End Role="Trn_PointOfInterest" EntitySet="Trn_PointOfInterest" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Trn_PropertyEntry_AppUser" Association="RealtyWeb.Models.Store.FK_Trn_PropertyEntry_AppUser">
+            <End Role="AppUser" EntitySet="AppUser" />
+            <End Role="Trn_PropertyEntry" EntitySet="Trn_PropertyEntry" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Trn_PropertyEntry_Bas_Property" Association="RealtyWeb.Models.Store.FK_Trn_PropertyEntry_Bas_Property">
+            <End Role="Bas_Property" EntitySet="Bas_Property" />
+            <End Role="Trn_PropertyEntry" EntitySet="Trn_PropertyEntry" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Trn_PropertyEntry_Bas_PropertyIndicator" Association="RealtyWeb.Models.Store.FK_Trn_PropertyEntry_Bas_PropertyIndicator">
+            <End Role="Bas_PropertyIndicator" EntitySet="Bas_PropertyIndicator" />
+            <End Role="Trn_PropertyEntry" EntitySet="Trn_PropertyEntry" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Trn_UserFavorite_AppUser" Association="RealtyWeb.Models.Store.FK_Trn_UserFavorite_AppUser">
+            <End Role="AppUser" EntitySet="AppUser" />
+            <End Role="Trn_UserFavorite" EntitySet="Trn_UserFavorite" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Trn_UserFavorite_Trn_PropertyEntry" Association="RealtyWeb.Models.Store.FK_Trn_UserFavorite_Trn_PropertyEntry">
+            <End Role="Trn_PropertyEntry" EntitySet="Trn_PropertyEntry" />
+            <End Role="Trn_UserFavorite" EntitySet="Trn_UserFavorite" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="AppUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" />
+          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" Nullable="false" MaxLength="256" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="256" />
+          <Property Name="MiddleInitial" Type="nvarchar" MaxLength="1" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="256" />
+          <Property Name="LicenseNo" Type="varchar" MaxLength="50" />
+          <Property Name="ProfilePicLink" Type="nvarchar(max)" />
+          <Property Name="ProfileDetails" Type="nvarchar(max)" />
+          <Property Name="Address1" Type="nvarchar" MaxLength="500" />
+          <Property Name="Address2" Type="nvarchar" MaxLength="500" />
+          <Property Name="Address3" Type="nvarchar" MaxLength="500" />
+          <Property Name="Address4" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="Bas_Barangay">
+          <Key>
+            <PropertyRef Name="BarangayId" />
+          </Key>
+          <Property Name="BarangayId" Type="int" Nullable="false" />
+          <Property Name="BarangayName" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="int" Nullable="false" />
+          <Property Name="UpdatedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Bas_CityMunicipality">
+          <Key>
+            <PropertyRef Name="CityMunId" />
+          </Key>
+          <Property Name="CityMunId" Type="int" Nullable="false" />
+          <Property Name="CityMunicipalityName" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="int" Nullable="false" />
+          <Property Name="UpdatedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Bas_Constant">
+          <Key>
+            <PropertyRef Name="ConstantId" />
+          </Key>
+          <Property Name="ConstantId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ConstantCd" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="ConstantValue" Type="varchar" Nullable="false" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Bas_Location">
+          <Key>
+            <PropertyRef Name="LocationId" />
+          </Key>
+          <Property Name="LocationId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="LocationName" Type="nvarchar" Nullable="false" MaxLength="200" />
+          <Property Name="LocationType" Type="char" MaxLength="3" />
+        </EntityType>
+        <EntityType Name="Bas_LocationPath">
+          <Key>
+            <PropertyRef Name="PathId" />
+          </Key>
+          <Property Name="PathId" Type="int" Nullable="false" />
+          <Property Name="BrgyId" Type="int" Nullable="false" />
+          <Property Name="BarangayName" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="CityMunId" Type="int" Nullable="false" />
+          <Property Name="City_MunicipalityName" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="ProvinceId" Type="int" Nullable="false" />
+          <Property Name="ProvinceName" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="int" Nullable="false" />
+          <Property Name="UpdatedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Bas_PointOfInterestType">
+          <Key>
+            <PropertyRef Name="PoiTypeId" />
+          </Key>
+          <Property Name="PoiTypeId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="PoiTypeName" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="int" Nullable="false" />
+          <Property Name="UpdatedDate" Type="datetime" Nullable="false" />
+          <Property Name="TimeStamp" Type="timestamp" Nullable="false" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="Bas_Property">
+          <Key>
+            <PropertyRef Name="PropertyId" />
+          </Key>
+          <Property Name="PropertyId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="PropertyName" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="PropertyDesc" Type="varchar" Nullable="false" MaxLength="200" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="int" Nullable="false" />
+          <Property Name="UpdatedDate" Type="datetime" Nullable="false" />
+          <Property Name="TimeStamp" Type="timestamp" Nullable="false" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="Bas_PropertyIndicator">
+          <Key>
+            <PropertyRef Name="PropIndicatorId" />
+          </Key>
+          <Property Name="PropIndicatorId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="PropIndicatorName" Type="varchar" Nullable="false" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Bas_Province">
+          <Key>
+            <PropertyRef Name="ProvinceId" />
+          </Key>
+          <Property Name="ProvinceId" Type="int" Nullable="false" />
+          <Property Name="ProvinceName" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="int" Nullable="false" />
+          <Property Name="UpdatedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PostCard">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Type" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="ImagePath" Type="varchar" Nullable="false" MaxLength="1000" />
+          <Property Name="Title" Type="nvarchar" MaxLength="100" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Status" Type="char" Nullable="false" MaxLength="1" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="UpdatedDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Site">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="AboutUs" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ContactUs" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="CompanyName" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="Mission" Type="nvarchar(max)" />
+          <Property Name="Vision" Type="nvarchar(max)" />
+          <Property Name="Bulletin" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ImagePath" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Trn_ClientInquiry">
+          <Key>
+            <PropertyRef Name="ClientInquiryId" />
+          </Key>
+          <Property Name="ClientInquiryId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="PropertyEntryId" Type="bigint" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="Name" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="Email" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="ContactNo" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="InquiryNote" Type="varchar" Nullable="false" MaxLength="1000" />
+          <Property Name="Status" Type="char" Nullable="false" MaxLength="1" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="int" Nullable="false" />
+          <Property Name="UpdatedDate" Type="datetime" Nullable="false" />
+          <Property Name="TimeStamp" Type="timestamp" Nullable="false" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="Trn_ClientMessage">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="ContactNo" Type="nvarchar" Nullable="false" MaxLength="20" />
+          <Property Name="Message" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Status" Type="nchar" Nullable="false" MaxLength="1" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Trn_ImageGallery">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="TranId" Type="bigint" Nullable="false" />
+          <Property Name="ImagePath" Type="varchar" Nullable="false" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Trn_PointOfInterest">
+          <Key>
+            <PropertyRef Name="PoiId" />
+          </Key>
+          <Property Name="PoiId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="PropertyEntryId" Type="bigint" Nullable="false" />
+          <Property Name="Name" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="Distance" Type="decimal" Nullable="false" Scale="2" />
+          <Property Name="PoiTypeId" Type="int" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="int" Nullable="false" />
+          <Property Name="UpdatedDate" Type="datetime" Nullable="false" />
+          <Property Name="TimeStamp" Type="timestamp" Nullable="false" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="Trn_PropertyEntry">
+          <Key>
+            <PropertyRef Name="PropertyEntryId" />
+          </Key>
+          <Property Name="PropertyEntryId" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="PropertyId" Type="int" Nullable="false" />
+          <Property Name="PropertyTitle" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="PropertyDetails" Type="varchar" Nullable="false" MaxLength="5000" />
+          <Property Name="LotArea" Type="decimal" Nullable="false" Scale="2" />
+          <Property Name="FloorArea" Type="decimal" Nullable="false" Scale="2" />
+          <Property Name="Price" Type="decimal" Nullable="false" />
+          <Property Name="Bedrooms" Type="int" />
+          <Property Name="Baths" Type="int" />
+          <Property Name="AllowPet" Type="bit" Nullable="false" />
+          <Property Name="HasGarden" Type="bit" Nullable="false" />
+          <Property Name="PropIndicatorId" Type="int" Nullable="false" />
+          <Property Name="Address1" Type="varchar" Nullable="false" MaxLength="500" />
+          <Property Name="Address2" Type="varchar" Nullable="false" MaxLength="500" />
+          <Property Name="Address3" Type="varchar" Nullable="false" MaxLength="500" />
+          <Property Name="Address4" Type="varchar" Nullable="false" MaxLength="500" />
+          <Property Name="Status" Type="char" Nullable="false" MaxLength="1" />
+          <Property Name="ContactPerson" Type="int" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="int" Nullable="false" />
+          <Property Name="UpdatedDate" Type="datetime" Nullable="false" />
+          <Property Name="TimeStamp" Type="timestamp" Nullable="false" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="Trn_Subscription">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Email" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="ContactNo" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="ReceiveAlerts" Type="bit" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Trn_UserFavorite">
+          <Key>
+            <PropertyRef Name="UserFavId" />
+          </Key>
+          <Property Name="UserFavId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="PropertyEntryId" Type="bigint" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserClaim">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="ClaimType" Type="nvarchar(max)" />
+          <Property Name="ClaimValue" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="UserLogin">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="nvarchar" Nullable="false" MaxLength="128" />
+          <Property Name="ProviderKey" Type="nvarchar" Nullable="false" MaxLength="128" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="UserUserRole">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="RoleId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_dbo_UserClaim_dbo_AppUser_UserId">
+          <End Role="AppUser" Type="RealtyWeb.Models.Store.AppUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UserClaim" Type="RealtyWeb.Models.Store.UserClaim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AppUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserClaim">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_UserLogin_dbo_AppUsers_UserId">
+          <End Role="AppUser" Type="RealtyWeb.Models.Store.AppUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UserLogin" Type="RealtyWeb.Models.Store.UserLogin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AppUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserLogin">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_UserRole_dbo_AppUser_UserId">
+          <End Role="AppUser" Type="RealtyWeb.Models.Store.AppUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UserUserRole" Type="RealtyWeb.Models.Store.UserUserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AppUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserUserRole">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_UserRole_dbo_Role_RoleId">
+          <End Role="UserRole" Type="RealtyWeb.Models.Store.UserRole" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UserUserRole" Type="RealtyWeb.Models.Store.UserUserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserRole">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserUserRole">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Trn_ClientInquiry_Trn_PropertyEntry">
+          <End Role="Trn_PropertyEntry" Type="RealtyWeb.Models.Store.Trn_PropertyEntry" Multiplicity="1" />
+          <End Role="Trn_ClientInquiry" Type="RealtyWeb.Models.Store.Trn_ClientInquiry" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trn_PropertyEntry">
+              <PropertyRef Name="PropertyEntryId" />
+            </Principal>
+            <Dependent Role="Trn_ClientInquiry">
+              <PropertyRef Name="PropertyEntryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Trn_ImageGallery_Trn_PropertyEntry">
+          <End Role="Trn_PropertyEntry" Type="RealtyWeb.Models.Store.Trn_PropertyEntry" Multiplicity="1" />
+          <End Role="Trn_ImageGallery" Type="RealtyWeb.Models.Store.Trn_ImageGallery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trn_PropertyEntry">
+              <PropertyRef Name="PropertyEntryId" />
+            </Principal>
+            <Dependent Role="Trn_ImageGallery">
+              <PropertyRef Name="TranId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Trn_PointOfInterest_Bas_PointOfInterestType">
+          <End Role="Bas_PointOfInterestType" Type="RealtyWeb.Models.Store.Bas_PointOfInterestType" Multiplicity="1" />
+          <End Role="Trn_PointOfInterest" Type="RealtyWeb.Models.Store.Trn_PointOfInterest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bas_PointOfInterestType">
+              <PropertyRef Name="PoiTypeId" />
+            </Principal>
+            <Dependent Role="Trn_PointOfInterest">
+              <PropertyRef Name="PoiTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Trn_PointOfInterest_Trn_PropertyEntry">
+          <End Role="Trn_PropertyEntry" Type="RealtyWeb.Models.Store.Trn_PropertyEntry" Multiplicity="1" />
+          <End Role="Trn_PointOfInterest" Type="RealtyWeb.Models.Store.Trn_PointOfInterest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trn_PropertyEntry">
+              <PropertyRef Name="PropertyEntryId" />
+            </Principal>
+            <Dependent Role="Trn_PointOfInterest">
+              <PropertyRef Name="PropertyEntryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Trn_PropertyEntry_AppUser">
+          <End Role="AppUser" Type="RealtyWeb.Models.Store.AppUser" Multiplicity="1" />
+          <End Role="Trn_PropertyEntry" Type="RealtyWeb.Models.Store.Trn_PropertyEntry" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AppUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Trn_PropertyEntry">
+              <PropertyRef Name="ContactPerson" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Trn_PropertyEntry_Bas_Property">
+          <End Role="Bas_Property" Type="RealtyWeb.Models.Store.Bas_Property" Multiplicity="1" />
+          <End Role="Trn_PropertyEntry" Type="RealtyWeb.Models.Store.Trn_PropertyEntry" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bas_Property">
+              <PropertyRef Name="PropertyId" />
+            </Principal>
+            <Dependent Role="Trn_PropertyEntry">
+              <PropertyRef Name="PropertyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Trn_PropertyEntry_Bas_PropertyIndicator">
+          <End Role="Bas_PropertyIndicator" Type="RealtyWeb.Models.Store.Bas_PropertyIndicator" Multiplicity="1" />
+          <End Role="Trn_PropertyEntry" Type="RealtyWeb.Models.Store.Trn_PropertyEntry" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bas_PropertyIndicator">
+              <PropertyRef Name="PropIndicatorId" />
+            </Principal>
+            <Dependent Role="Trn_PropertyEntry">
+              <PropertyRef Name="PropIndicatorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Trn_UserFavorite_AppUser">
+          <End Role="AppUser" Type="RealtyWeb.Models.Store.AppUser" Multiplicity="1" />
+          <End Role="Trn_UserFavorite" Type="RealtyWeb.Models.Store.Trn_UserFavorite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AppUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Trn_UserFavorite">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Trn_UserFavorite_Trn_PropertyEntry">
+          <End Role="Trn_PropertyEntry" Type="RealtyWeb.Models.Store.Trn_PropertyEntry" Multiplicity="1" />
+          <End Role="Trn_UserFavorite" Type="RealtyWeb.Models.Store.Trn_UserFavorite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trn_PropertyEntry">
+              <PropertyRef Name="PropertyEntryId" />
+            </Principal>
+            <Dependent Role="Trn_UserFavorite">
+              <PropertyRef Name="PropertyEntryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="RealtyWeb.Models" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="RealtyWebContext" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="AppUsers" EntityType="RealtyWeb.Models.AppUser" />
+          <EntitySet Name="Barangays" EntityType="RealtyWeb.Models.Barangay" />
+          <EntitySet Name="CityMunicipalities" EntityType="RealtyWeb.Models.CityMunicipality" />
+          <EntitySet Name="Constants" EntityType="RealtyWeb.Models.Constant" />
+          <EntitySet Name="Locations" EntityType="RealtyWeb.Models.Location" />
+          <EntitySet Name="LocationPaths" EntityType="RealtyWeb.Models.LocationPath" />
+          <EntitySet Name="PointOfInterestTypes" EntityType="RealtyWeb.Models.PointOfInterestType" />
+          <EntitySet Name="Properties" EntityType="RealtyWeb.Models.Property" />
+          <EntitySet Name="PropertyIndicators" EntityType="RealtyWeb.Models.PropertyIndicator" />
+          <EntitySet Name="Provinces" EntityType="RealtyWeb.Models.Province" />
+          <EntitySet Name="ClientInquiries" EntityType="RealtyWeb.Models.ClientInquiry" />
+          <EntitySet Name="ImageGalleries" EntityType="RealtyWeb.Models.ImageGallery" />
+          <EntitySet Name="PointOfInterests" EntityType="RealtyWeb.Models.PointOfInterest" />
+          <EntitySet Name="PropertyEntries" EntityType="RealtyWeb.Models.PropertyEntry" />
+          <EntitySet Name="UserFavorites" EntityType="RealtyWeb.Models.UserFavorite" />
+          <EntitySet Name="UserClaims" EntityType="RealtyWeb.Models.UserClaim" />
+          <EntitySet Name="UserLogins" EntityType="RealtyWeb.Models.UserLogin" />
+          <EntitySet Name="UserRoles" EntityType="RealtyWeb.Models.UserRole" />
+          <AssociationSet Name="FK_dbo_UserClaim_dbo_AppUser_UserId" Association="RealtyWeb.Models.FK_dbo_UserClaim_dbo_AppUser_UserId">
+            <End Role="AppUser" EntitySet="AppUsers" />
+            <End Role="UserClaim" EntitySet="UserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_UserLogin_dbo_AppUsers_UserId" Association="RealtyWeb.Models.FK_dbo_UserLogin_dbo_AppUsers_UserId">
+            <End Role="AppUser" EntitySet="AppUsers" />
+            <End Role="UserLogin" EntitySet="UserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Trn_PropertyEntry_AppUser" Association="RealtyWeb.Models.FK_Trn_PropertyEntry_AppUser">
+            <End Role="AppUser" EntitySet="AppUsers" />
+            <End Role="Trn_PropertyEntry" EntitySet="PropertyEntries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Trn_UserFavorite_AppUser" Association="RealtyWeb.Models.FK_Trn_UserFavorite_AppUser">
+            <End Role="AppUser" EntitySet="AppUsers" />
+            <End Role="Trn_UserFavorite" EntitySet="UserFavorites" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Trn_PointOfInterest_Bas_PointOfInterestType" Association="RealtyWeb.Models.FK_Trn_PointOfInterest_Bas_PointOfInterestType">
+            <End Role="Bas_PointOfInterestType" EntitySet="PointOfInterestTypes" />
+            <End Role="Trn_PointOfInterest" EntitySet="PointOfInterests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Trn_PropertyEntry_Bas_Property" Association="RealtyWeb.Models.FK_Trn_PropertyEntry_Bas_Property">
+            <End Role="Bas_Property" EntitySet="Properties" />
+            <End Role="Trn_PropertyEntry" EntitySet="PropertyEntries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Trn_PropertyEntry_Bas_PropertyIndicator" Association="RealtyWeb.Models.FK_Trn_PropertyEntry_Bas_PropertyIndicator">
+            <End Role="Bas_PropertyIndicator" EntitySet="PropertyIndicators" />
+            <End Role="Trn_PropertyEntry" EntitySet="PropertyEntries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Trn_ClientInquiry_Trn_PropertyEntry" Association="RealtyWeb.Models.FK_Trn_ClientInquiry_Trn_PropertyEntry">
+            <End Role="Trn_PropertyEntry" EntitySet="PropertyEntries" />
+            <End Role="Trn_ClientInquiry" EntitySet="ClientInquiries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Trn_ImageGallery_Trn_PropertyEntry" Association="RealtyWeb.Models.FK_Trn_ImageGallery_Trn_PropertyEntry">
+            <End Role="Trn_PropertyEntry" EntitySet="PropertyEntries" />
+            <End Role="Trn_ImageGallery" EntitySet="ImageGalleries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Trn_PointOfInterest_Trn_PropertyEntry" Association="RealtyWeb.Models.FK_Trn_PointOfInterest_Trn_PropertyEntry">
+            <End Role="Trn_PropertyEntry" EntitySet="PropertyEntries" />
+            <End Role="Trn_PointOfInterest" EntitySet="PointOfInterests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Trn_UserFavorite_Trn_PropertyEntry" Association="RealtyWeb.Models.FK_Trn_UserFavorite_Trn_PropertyEntry">
+            <End Role="Trn_PropertyEntry" EntitySet="PropertyEntries" />
+            <End Role="Trn_UserFavorite" EntitySet="UserFavorites" />
+          </AssociationSet>
+          <AssociationSet Name="UserUserRole" Association="RealtyWeb.Models.UserUserRole">
+            <End Role="AppUser" EntitySet="AppUsers" />
+            <End Role="UserRole" EntitySet="UserRoles" />
+          </AssociationSet>
+          <EntitySet Name="ClientMessages" EntityType="RealtyWeb.Models.ClientMessage" />
+          <EntitySet Name="Sites" EntityType="RealtyWeb.Models.Site" />
+          <EntitySet Name="PostCards" EntityType="RealtyWeb.Models.PostCard" />
+          <EntitySet Name="Subscriptions" EntityType="RealtyWeb.Models.Subscription" />
+        </EntityContainer>
+        <EntityType Name="AppUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Email" Type="String" MaxLength="256" Unicode="true" FixedLength="false" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" Unicode="true" FixedLength="false" />
+          <Property Name="FirstName" Type="String" MaxLength="256" Unicode="true" FixedLength="false" />
+          <Property Name="MiddleInitial" Type="String" MaxLength="1" Unicode="true" FixedLength="false" />
+          <Property Name="LastName" Type="String" MaxLength="256" Unicode="true" FixedLength="false" />
+          <Property Name="LicenseNo" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Claims" Relationship="RealtyWeb.Models.FK_dbo_UserClaim_dbo_AppUser_UserId" FromRole="AppUser" ToRole="UserClaim" />
+          <NavigationProperty Name="Logins" Relationship="RealtyWeb.Models.FK_dbo_UserLogin_dbo_AppUsers_UserId" FromRole="AppUser" ToRole="UserLogin" />
+          <NavigationProperty Name="PropertyEntry" Relationship="RealtyWeb.Models.FK_Trn_PropertyEntry_AppUser" FromRole="AppUser" ToRole="Trn_PropertyEntry" />
+          <NavigationProperty Name="UserFavorite" Relationship="RealtyWeb.Models.FK_Trn_UserFavorite_AppUser" FromRole="AppUser" ToRole="Trn_UserFavorite" />
+          <NavigationProperty Name="Roles" Relationship="RealtyWeb.Models.UserUserRole" FromRole="AppUser" ToRole="UserRole" />
+          <Property Type="String" Name="ProfilePicLink" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ProfileDetails" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Address1" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Address2" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Address3" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Address4" MaxLength="500" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Barangay">
+          <Key>
+            <PropertyRef Name="BarangayId" />
+          </Key>
+          <Property Name="BarangayId" Type="Int32" Nullable="false" />
+          <Property Name="BarangayName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="Int32" Nullable="false" />
+          <Property Name="UpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="CityMunicipality">
+          <Key>
+            <PropertyRef Name="CityMunId" />
+          </Key>
+          <Property Name="CityMunId" Type="Int32" Nullable="false" />
+          <Property Name="CityMunicipalityName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="Int32" Nullable="false" />
+          <Property Name="UpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="Constant">
+          <Key>
+            <PropertyRef Name="ConstantId" />
+          </Key>
+          <Property Name="ConstantId" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="ConstantCd" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="ConstantValue" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Location">
+          <Key>
+            <PropertyRef Name="LocationId" />
+          </Key>
+          <Property Name="LocationId" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="LocationName" Type="String" Nullable="false" MaxLength="200" Unicode="true" FixedLength="false" />
+          <Property Name="LocationType" Type="String" MaxLength="3" Unicode="false" FixedLength="true" />
+        </EntityType>
+        <EntityType Name="LocationPath">
+          <Key>
+            <PropertyRef Name="PathId" />
+          </Key>
+          <Property Name="PathId" Type="Int32" Nullable="false" />
+          <Property Name="BrgyId" Type="Int32" Nullable="false" />
+          <Property Name="BarangayName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="CityMunId" Type="Int32" Nullable="false" />
+          <Property Name="City_MunicipalityName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="ProvinceId" Type="Int32" Nullable="false" />
+          <Property Name="ProvinceName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="Int32" Nullable="false" />
+          <Property Name="UpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="PointOfInterestType">
+          <Key>
+            <PropertyRef Name="PoiTypeId" />
+          </Key>
+          <Property Name="PoiTypeId" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="PoiTypeName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="Int32" Nullable="false" />
+          <Property Name="UpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="TimeStamp" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" p1:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="PointOfInterest" Relationship="RealtyWeb.Models.FK_Trn_PointOfInterest_Bas_PointOfInterestType" FromRole="Bas_PointOfInterestType" ToRole="Trn_PointOfInterest" />
+        </EntityType>
+        <EntityType Name="Property">
+          <Key>
+            <PropertyRef Name="PropertyId" />
+          </Key>
+          <Property Name="PropertyId" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="PropertyName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="PropertyDesc" Type="String" Nullable="false" MaxLength="200" Unicode="false" FixedLength="false" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="Int32" Nullable="false" />
+          <Property Name="UpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="TimeStamp" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" p1:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="PropertyEntry" Relationship="RealtyWeb.Models.FK_Trn_PropertyEntry_Bas_Property" FromRole="Bas_Property" ToRole="Trn_PropertyEntry" />
+        </EntityType>
+        <EntityType Name="PropertyIndicator">
+          <Key>
+            <PropertyRef Name="PropIndicatorId" />
+          </Key>
+          <Property Name="PropIndicatorId" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="PropIndicatorName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="PropertyEntry" Relationship="RealtyWeb.Models.FK_Trn_PropertyEntry_Bas_PropertyIndicator" FromRole="Bas_PropertyIndicator" ToRole="Trn_PropertyEntry" />
+        </EntityType>
+        <EntityType Name="Province">
+          <Key>
+            <PropertyRef Name="ProvinceId" />
+          </Key>
+          <Property Name="ProvinceId" Type="Int32" Nullable="false" />
+          <Property Name="ProvinceName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="Int32" Nullable="false" />
+          <Property Name="UpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="ClientInquiry">
+          <Key>
+            <PropertyRef Name="ClientInquiryId" />
+          </Key>
+          <Property Name="ClientInquiryId" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="PropertyEntryId" Type="Int64" Nullable="false" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="ContactNo" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="InquiryNote" Type="String" Nullable="false" MaxLength="1000" Unicode="false" FixedLength="false" />
+          <Property Name="Status" Type="String" Nullable="false" MaxLength="1" Unicode="false" FixedLength="true" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="Int32" Nullable="false" />
+          <Property Name="UpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="TimeStamp" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" p1:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="PropertyEntry" Relationship="RealtyWeb.Models.FK_Trn_ClientInquiry_Trn_PropertyEntry" FromRole="Trn_ClientInquiry" ToRole="Trn_PropertyEntry" />
+        </EntityType>
+        <EntityType Name="ImageGallery">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="TranId" Type="Int64" Nullable="false" />
+          <Property Name="ImagePath" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="PropertyEntry" Relationship="RealtyWeb.Models.FK_Trn_ImageGallery_Trn_PropertyEntry" FromRole="Trn_ImageGallery" ToRole="Trn_PropertyEntry" />
+        </EntityType>
+        <EntityType Name="PointOfInterest">
+          <Key>
+            <PropertyRef Name="PoiId" />
+          </Key>
+          <Property Name="PoiId" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="PropertyEntryId" Type="Int64" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="Distance" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="PoiTypeId" Type="Int32" Nullable="false" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="Int32" Nullable="false" />
+          <Property Name="UpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="TimeStamp" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" p1:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="PointOfInterestType" Relationship="RealtyWeb.Models.FK_Trn_PointOfInterest_Bas_PointOfInterestType" FromRole="Trn_PointOfInterest" ToRole="Bas_PointOfInterestType" />
+          <NavigationProperty Name="PropertyEntry" Relationship="RealtyWeb.Models.FK_Trn_PointOfInterest_Trn_PropertyEntry" FromRole="Trn_PointOfInterest" ToRole="Trn_PropertyEntry" />
+        </EntityType>
+        <EntityType Name="PropertyEntry">
+          <Key>
+            <PropertyRef Name="PropertyEntryId" />
+          </Key>
+          <Property Name="PropertyEntryId" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="PropertyId" Type="Int32" Nullable="false" />
+          <Property Name="PropertyTitle" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="PropertyDetails" Type="String" Nullable="false" MaxLength="5000" Unicode="false" FixedLength="false" />
+          <Property Name="LotArea" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="FloorArea" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Price" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Bedrooms" Type="Int32" />
+          <Property Name="Baths" Type="Int32" />
+          <Property Name="AllowPet" Type="Boolean" Nullable="false" />
+          <Property Name="HasGarden" Type="Boolean" Nullable="false" />
+          <Property Name="PropIndicatorId" Type="Int32" Nullable="false" />
+          <Property Name="Address1" Type="String" Nullable="false" MaxLength="500" Unicode="false" FixedLength="false" />
+          <Property Name="Address2" Type="String" Nullable="false" MaxLength="500" Unicode="false" FixedLength="false" />
+          <Property Name="Address3" Type="String" Nullable="false" MaxLength="500" Unicode="false" FixedLength="false" />
+          <Property Name="Address4" Type="String" Nullable="false" MaxLength="500" Unicode="false" FixedLength="false" />
+          <Property Name="Status" Type="String" Nullable="false" MaxLength="1" Unicode="false" FixedLength="true" />
+          <Property Name="ContactPerson" Type="Int32" Nullable="false" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="Int32" Nullable="false" />
+          <Property Name="UpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="TimeStamp" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" p1:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="AppUser" Relationship="RealtyWeb.Models.FK_Trn_PropertyEntry_AppUser" FromRole="Trn_PropertyEntry" ToRole="AppUser" />
+          <NavigationProperty Name="Property" Relationship="RealtyWeb.Models.FK_Trn_PropertyEntry_Bas_Property" FromRole="Trn_PropertyEntry" ToRole="Bas_Property" />
+          <NavigationProperty Name="PropertyIndicator" Relationship="RealtyWeb.Models.FK_Trn_PropertyEntry_Bas_PropertyIndicator" FromRole="Trn_PropertyEntry" ToRole="Bas_PropertyIndicator" />
+          <NavigationProperty Name="ClientInquiry" Relationship="RealtyWeb.Models.FK_Trn_ClientInquiry_Trn_PropertyEntry" FromRole="Trn_PropertyEntry" ToRole="Trn_ClientInquiry" />
+          <NavigationProperty Name="ImageGallery" Relationship="RealtyWeb.Models.FK_Trn_ImageGallery_Trn_PropertyEntry" FromRole="Trn_PropertyEntry" ToRole="Trn_ImageGallery" />
+          <NavigationProperty Name="PointOfInterest" Relationship="RealtyWeb.Models.FK_Trn_PointOfInterest_Trn_PropertyEntry" FromRole="Trn_PropertyEntry" ToRole="Trn_PointOfInterest" />
+          <NavigationProperty Name="UserFavorite" Relationship="RealtyWeb.Models.FK_Trn_UserFavorite_Trn_PropertyEntry" FromRole="Trn_PropertyEntry" ToRole="Trn_UserFavorite" />
+        </EntityType>
+        <EntityType Name="UserFavorite">
+          <Key>
+            <PropertyRef Name="UserFavId" />
+          </Key>
+          <Property Name="UserFavId" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="PropertyEntryId" Type="Int64" Nullable="false" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="AppUser" Relationship="RealtyWeb.Models.FK_Trn_UserFavorite_AppUser" FromRole="Trn_UserFavorite" ToRole="AppUser" />
+          <NavigationProperty Name="PropertyEntry" Relationship="RealtyWeb.Models.FK_Trn_UserFavorite_Trn_PropertyEntry" FromRole="Trn_UserFavorite" ToRole="Trn_PropertyEntry" />
+        </EntityType>
+        <EntityType Name="UserClaim">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="ClaimType" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="ClaimValue" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="AppUser" Relationship="RealtyWeb.Models.FK_dbo_UserClaim_dbo_AppUser_UserId" FromRole="UserClaim" ToRole="AppUser" />
+        </EntityType>
+        <EntityType Name="UserLogin">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="String" Nullable="false" MaxLength="128" Unicode="true" FixedLength="false" />
+          <Property Name="ProviderKey" Type="String" Nullable="false" MaxLength="128" Unicode="true" FixedLength="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AppUser" Relationship="RealtyWeb.Models.FK_dbo_UserLogin_dbo_AppUsers_UserId" FromRole="UserLogin" ToRole="AppUser" />
+        </EntityType>
+        <EntityType Name="UserRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="256" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="AppUsers" Relationship="RealtyWeb.Models.UserUserRole" FromRole="UserRole" ToRole="AppUser" />
+        </EntityType>
+        <Association Name="FK_dbo_UserClaim_dbo_AppUser_UserId">
+          <End Role="AppUser" Type="RealtyWeb.Models.AppUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UserClaim" Type="RealtyWeb.Models.UserClaim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AppUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserClaim">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_UserLogin_dbo_AppUsers_UserId">
+          <End Role="AppUser" Type="RealtyWeb.Models.AppUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UserLogin" Type="RealtyWeb.Models.UserLogin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AppUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserLogin">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Trn_PropertyEntry_AppUser">
+          <End Role="AppUser" Type="RealtyWeb.Models.AppUser" Multiplicity="1" />
+          <End Role="Trn_PropertyEntry" Type="RealtyWeb.Models.PropertyEntry" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AppUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Trn_PropertyEntry">
+              <PropertyRef Name="ContactPerson" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Trn_UserFavorite_AppUser">
+          <End Role="AppUser" Type="RealtyWeb.Models.AppUser" Multiplicity="1" />
+          <End Role="Trn_UserFavorite" Type="RealtyWeb.Models.UserFavorite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AppUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Trn_UserFavorite">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Trn_PointOfInterest_Bas_PointOfInterestType">
+          <End Role="Bas_PointOfInterestType" Type="RealtyWeb.Models.PointOfInterestType" Multiplicity="1" />
+          <End Role="Trn_PointOfInterest" Type="RealtyWeb.Models.PointOfInterest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bas_PointOfInterestType">
+              <PropertyRef Name="PoiTypeId" />
+            </Principal>
+            <Dependent Role="Trn_PointOfInterest">
+              <PropertyRef Name="PoiTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Trn_PropertyEntry_Bas_Property">
+          <End Role="Bas_Property" Type="RealtyWeb.Models.Property" Multiplicity="1" />
+          <End Role="Trn_PropertyEntry" Type="RealtyWeb.Models.PropertyEntry" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bas_Property">
+              <PropertyRef Name="PropertyId" />
+            </Principal>
+            <Dependent Role="Trn_PropertyEntry">
+              <PropertyRef Name="PropertyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Trn_PropertyEntry_Bas_PropertyIndicator">
+          <End Role="Bas_PropertyIndicator" Type="RealtyWeb.Models.PropertyIndicator" Multiplicity="1" />
+          <End Role="Trn_PropertyEntry" Type="RealtyWeb.Models.PropertyEntry" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bas_PropertyIndicator">
+              <PropertyRef Name="PropIndicatorId" />
+            </Principal>
+            <Dependent Role="Trn_PropertyEntry">
+              <PropertyRef Name="PropIndicatorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Trn_ClientInquiry_Trn_PropertyEntry">
+          <End Role="Trn_PropertyEntry" Type="RealtyWeb.Models.PropertyEntry" Multiplicity="1" />
+          <End Role="Trn_ClientInquiry" Type="RealtyWeb.Models.ClientInquiry" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trn_PropertyEntry">
+              <PropertyRef Name="PropertyEntryId" />
+            </Principal>
+            <Dependent Role="Trn_ClientInquiry">
+              <PropertyRef Name="PropertyEntryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Trn_ImageGallery_Trn_PropertyEntry">
+          <End Role="Trn_PropertyEntry" Type="RealtyWeb.Models.PropertyEntry" Multiplicity="1" />
+          <End Role="Trn_ImageGallery" Type="RealtyWeb.Models.ImageGallery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trn_PropertyEntry">
+              <PropertyRef Name="PropertyEntryId" />
+            </Principal>
+            <Dependent Role="Trn_ImageGallery">
+              <PropertyRef Name="TranId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Trn_PointOfInterest_Trn_PropertyEntry">
+          <End Role="Trn_PropertyEntry" Type="RealtyWeb.Models.PropertyEntry" Multiplicity="1" />
+          <End Role="Trn_PointOfInterest" Type="RealtyWeb.Models.PointOfInterest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trn_PropertyEntry">
+              <PropertyRef Name="PropertyEntryId" />
+            </Principal>
+            <Dependent Role="Trn_PointOfInterest">
+              <PropertyRef Name="PropertyEntryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Trn_UserFavorite_Trn_PropertyEntry">
+          <End Role="Trn_PropertyEntry" Type="RealtyWeb.Models.PropertyEntry" Multiplicity="1" />
+          <End Role="Trn_UserFavorite" Type="RealtyWeb.Models.UserFavorite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trn_PropertyEntry">
+              <PropertyRef Name="PropertyEntryId" />
+            </Principal>
+            <Dependent Role="Trn_UserFavorite">
+              <PropertyRef Name="PropertyEntryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UserUserRole">
+          <End Role="AppUser" Type="RealtyWeb.Models.AppUser" Multiplicity="*" />
+          <End Role="UserRole" Type="RealtyWeb.Models.UserRole" Multiplicity="*" />
+        </Association>
+        <EntityType Name="ClientMessage">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ContactNo" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Message" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Status" Nullable="false" MaxLength="1" FixedLength="true" Unicode="true" />
+          <Property Type="DateTime" Name="CreatedDate" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="Site">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="AboutUs" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ContactUs" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="CompanyName" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Bulletin" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Mission" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Vision" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ImagePath" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="PostCard">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Type" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ImagePath" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Title" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Description" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Status" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Type="DateTime" Name="CreatedDate" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" Nullable="false" />
+          <Property Type="DateTime" Name="UpdatedDate" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="UpdatedBy" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Subscription">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ContactNo" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="Boolean" Name="ReceiveAlerts" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedDate" Nullable="false" Precision="3" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="RealtyWebModelsStoreContainer" CdmEntityContainer="RealtyWebContext">
+          <EntitySetMapping Name="AppUsers">
+            <EntityTypeMapping TypeName="RealtyWeb.Models.AppUser">
+              <MappingFragment StoreEntitySet="AppUser">
+                <ScalarProperty Name="Address4" ColumnName="Address4" />
+                <ScalarProperty Name="Address3" ColumnName="Address3" />
+                <ScalarProperty Name="Address2" ColumnName="Address2" />
+                <ScalarProperty Name="Address1" ColumnName="Address1" />
+                <ScalarProperty Name="ProfileDetails" ColumnName="ProfileDetails" />
+                <ScalarProperty Name="ProfilePicLink" ColumnName="ProfilePicLink" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="MiddleInitial" ColumnName="MiddleInitial" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="LicenseNo" ColumnName="LicenseNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Barangays">
+            <EntityTypeMapping TypeName="RealtyWeb.Models.Barangay">
+              <MappingFragment StoreEntitySet="Bas_Barangay">
+                <ScalarProperty Name="BarangayId" ColumnName="BarangayId" />
+                <ScalarProperty Name="BarangayName" ColumnName="BarangayName" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CityMunicipalities">
+            <EntityTypeMapping TypeName="RealtyWeb.Models.CityMunicipality">
+              <MappingFragment StoreEntitySet="Bas_CityMunicipality">
+                <ScalarProperty Name="CityMunId" ColumnName="CityMunId" />
+                <ScalarProperty Name="CityMunicipalityName" ColumnName="CityMunicipalityName" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Constants">
+            <EntityTypeMapping TypeName="RealtyWeb.Models.Constant">
+              <MappingFragment StoreEntitySet="Bas_Constant">
+                <ScalarProperty Name="ConstantId" ColumnName="ConstantId" />
+                <ScalarProperty Name="ConstantCd" ColumnName="ConstantCd" />
+                <ScalarProperty Name="ConstantValue" ColumnName="ConstantValue" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Locations">
+            <EntityTypeMapping TypeName="RealtyWeb.Models.Location">
+              <MappingFragment StoreEntitySet="Bas_Location">
+                <ScalarProperty Name="LocationId" ColumnName="LocationId" />
+                <ScalarProperty Name="LocationName" ColumnName="LocationName" />
+                <ScalarProperty Name="LocationType" ColumnName="LocationType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LocationPaths">
+            <EntityTypeMapping TypeName="RealtyWeb.Models.LocationPath">
+              <MappingFragment StoreEntitySet="Bas_LocationPath">
+                <ScalarProperty Name="PathId" ColumnName="PathId" />
+                <ScalarProperty Name="BrgyId" ColumnName="BrgyId" />
+                <ScalarProperty Name="BarangayName" ColumnName="BarangayName" />
+                <ScalarProperty Name="CityMunId" ColumnName="CityMunId" />
+                <ScalarProperty Name="City_MunicipalityName" ColumnName="City_MunicipalityName" />
+                <ScalarProperty Name="ProvinceId" ColumnName="ProvinceId" />
+                <ScalarProperty Name="ProvinceName" ColumnName="ProvinceName" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PointOfInterestTypes">
+            <EntityTypeMapping TypeName="RealtyWeb.Models.PointOfInterestType">
+              <MappingFragment StoreEntitySet="Bas_PointOfInterestType">
+                <ScalarProperty Name="PoiTypeId" ColumnName="PoiTypeId" />
+                <ScalarProperty Name="PoiTypeName" ColumnName="PoiTypeName" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="TimeStamp" ColumnName="TimeStamp" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Properties">
+            <EntityTypeMapping TypeName="RealtyWeb.Models.Property">
+              <MappingFragment StoreEntitySet="Bas_Property">
+                <ScalarProperty Name="PropertyId" ColumnName="PropertyId" />
+                <ScalarProperty Name="PropertyName" ColumnName="PropertyName" />
+                <ScalarProperty Name="PropertyDesc" ColumnName="PropertyDesc" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="TimeStamp" ColumnName="TimeStamp" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PropertyIndicators">
+            <EntityTypeMapping TypeName="RealtyWeb.Models.PropertyIndicator">
+              <MappingFragment StoreEntitySet="Bas_PropertyIndicator">
+                <ScalarProperty Name="PropIndicatorId" ColumnName="PropIndicatorId" />
+                <ScalarProperty Name="PropIndicatorName" ColumnName="PropIndicatorName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Provinces">
+            <EntityTypeMapping TypeName="RealtyWeb.Models.Province">
+              <MappingFragment StoreEntitySet="Bas_Province">
+                <ScalarProperty Name="ProvinceId" ColumnName="ProvinceId" />
+                <ScalarProperty Name="ProvinceName" ColumnName="ProvinceName" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClientInquiries">
+            <EntityTypeMapping TypeName="RealtyWeb.Models.ClientInquiry">
+              <MappingFragment StoreEntitySet="Trn_ClientInquiry">
+                <ScalarProperty Name="ClientInquiryId" ColumnName="ClientInquiryId" />
+                <ScalarProperty Name="PropertyEntryId" ColumnName="PropertyEntryId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="ContactNo" ColumnName="ContactNo" />
+                <ScalarProperty Name="InquiryNote" ColumnName="InquiryNote" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="TimeStamp" ColumnName="TimeStamp" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ImageGalleries">
+            <EntityTypeMapping TypeName="RealtyWeb.Models.ImageGallery">
+              <MappingFragment StoreEntitySet="Trn_ImageGallery">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TranId" ColumnName="TranId" />
+                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PointOfInterests">
+            <EntityTypeMapping TypeName="RealtyWeb.Models.PointOfInterest">
+              <MappingFragment StoreEntitySet="Trn_PointOfInterest">
+                <ScalarProperty Name="PoiId" ColumnName="PoiId" />
+                <ScalarProperty Name="PropertyEntryId" ColumnName="PropertyEntryId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Distance" ColumnName="Distance" />
+                <ScalarProperty Name="PoiTypeId" ColumnName="PoiTypeId" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="TimeStamp" ColumnName="TimeStamp" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PropertyEntries">
+            <EntityTypeMapping TypeName="RealtyWeb.Models.PropertyEntry">
+              <MappingFragment StoreEntitySet="Trn_PropertyEntry">
+                <ScalarProperty Name="PropertyEntryId" ColumnName="PropertyEntryId" />
+                <ScalarProperty Name="PropertyId" ColumnName="PropertyId" />
+                <ScalarProperty Name="PropertyTitle" ColumnName="PropertyTitle" />
+                <ScalarProperty Name="PropertyDetails" ColumnName="PropertyDetails" />
+                <ScalarProperty Name="LotArea" ColumnName="LotArea" />
+                <ScalarProperty Name="FloorArea" ColumnName="FloorArea" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Bedrooms" ColumnName="Bedrooms" />
+                <ScalarProperty Name="Baths" ColumnName="Baths" />
+                <ScalarProperty Name="AllowPet" ColumnName="AllowPet" />
+                <ScalarProperty Name="HasGarden" ColumnName="HasGarden" />
+                <ScalarProperty Name="PropIndicatorId" ColumnName="PropIndicatorId" />
+                <ScalarProperty Name="Address1" ColumnName="Address1" />
+                <ScalarProperty Name="Address2" ColumnName="Address2" />
+                <ScalarProperty Name="Address3" ColumnName="Address3" />
+                <ScalarProperty Name="Address4" ColumnName="Address4" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ContactPerson" ColumnName="ContactPerson" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="TimeStamp" ColumnName="TimeStamp" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserFavorites">
+            <EntityTypeMapping TypeName="RealtyWeb.Models.UserFavorite">
+              <MappingFragment StoreEntitySet="Trn_UserFavorite">
+                <ScalarProperty Name="UserFavId" ColumnName="UserFavId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="PropertyEntryId" ColumnName="PropertyEntryId" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserClaims">
+            <EntityTypeMapping TypeName="RealtyWeb.Models.UserClaim">
+              <MappingFragment StoreEntitySet="UserClaim">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserLogins">
+            <EntityTypeMapping TypeName="RealtyWeb.Models.UserLogin">
+              <MappingFragment StoreEntitySet="UserLogin">
+                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserRoles">
+            <EntityTypeMapping TypeName="RealtyWeb.Models.UserRole">
+              <MappingFragment StoreEntitySet="UserRole">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="UserUserRole" TypeName="RealtyWeb.Models.UserUserRole" StoreEntitySet="UserUserRole">
+            <EndProperty Name="AppUser">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+            <EndProperty Name="UserRole">
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="ClientMessages">
+            <EntityTypeMapping TypeName="RealtyWeb.Models.ClientMessage">
+              <MappingFragment StoreEntitySet="Trn_ClientMessage">
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="ContactNo" ColumnName="ContactNo" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sites">
+            <EntityTypeMapping TypeName="RealtyWeb.Models.Site">
+              <MappingFragment StoreEntitySet="Site">
+                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+                <ScalarProperty Name="Vision" ColumnName="Vision" />
+                <ScalarProperty Name="Mission" ColumnName="Mission" />
+                <ScalarProperty Name="Bulletin" ColumnName="Bulletin" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="ContactUs" ColumnName="ContactUs" />
+                <ScalarProperty Name="AboutUs" ColumnName="AboutUs" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PostCards">
+            <EntityTypeMapping TypeName="RealtyWeb.Models.PostCard">
+              <MappingFragment StoreEntitySet="PostCard">
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Subscriptions">
+            <EntityTypeMapping TypeName="RealtyWeb.Models.Subscription">
+              <MappingFragment StoreEntitySet="Trn_Subscription">
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ReceiveAlerts" ColumnName="ReceiveAlerts" />
+                <ScalarProperty Name="ContactNo" ColumnName="ContactNo" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
